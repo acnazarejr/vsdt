@@ -14,7 +14,7 @@ from gui.base_form import BaseForm
 class ControlForm(BaseForm):
     """Main Window class"""
 
-    refresh = QtCore.pyqtSignal()
+    current_updated = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
         """Init method"""
@@ -79,6 +79,7 @@ class ControlForm(BaseForm):
     def _on_play_run(self):
         """Change values when control is on play"""
         self._current += self._interval
+        print(self._current, self._interval)
         if self._current >= self._end:
             self.timer.stop()
         else:
@@ -86,4 +87,4 @@ class ControlForm(BaseForm):
 
     def update_current(self, current):
         """Update current value"""
-        print('current', current)
+        self.current_updated.emit(current)

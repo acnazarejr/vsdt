@@ -3,6 +3,7 @@
 """Main app file"""
 
 import sys
+import math
 from PyQt5 import QtWidgets
 
 from gui.ui import MainWindowUiBase, MainWindowUi
@@ -24,16 +25,19 @@ class VSDT(MainWindowUiBase):
 
         #self._video_control = VideoControl(Raspicam(640, 480, 15))
 
-        # self._central_widget = self.create_main_form()
-        # self.setCentralWidget(self._central_widget)
-        self.gui.splitter.addWidget(self._create_visual_data_form())
-        self.gui.splitter.addWidget(self._create_control_form())
+        self._visual_data_form = self._create_visual_data_form()
+        self._control_form = self._create_control_form()
+
+        self.gui.splitter.addWidget(self._visual_data_form)
+        self.gui.splitter.addWidget(self._control_form)
 
         self.gui.visualSensorRadioButton.clicked.connect(self._operation_mode_clicked)
         self.gui.visualRadioButton.clicked.connect(self._operation_mode_clicked)
         self.gui.sensorRadioButton.clicked.connect(self._operation_mode_clicked)
 
         self.gui.openVideoButton.clicked.connect(self._open_video_button_clicked)
+
+        self._control_form.current_updated.connect(self._current_updated)
 
 
     def _create_visual_data_form(self):
@@ -76,12 +80,17 @@ class VSDT(MainWindowUiBase):
         #pylint: disable=E1101
         video_file = QtWidgets.QFileDialog.getOpenFileName(self,
                                                            'Open file',
-                                                           'c:\\',
+                                                           'd:\\',
                                                            "Video files (*.mp4 *.avi)")
         self._video = Video(video_file[0])
-        print(video_file[0])
+        self._control_form.update_values(0, self._video.length, 1000/self._video.fps)
         #pylint: enable=E1101
 
+    def _current_updated(self, current_value):
+        """control current updated slot"""
+        # print(current_value)
+        frame = self._video.get_frame(current_value)
+        self._visual_data_form.update_frame(frame)
 
 
 

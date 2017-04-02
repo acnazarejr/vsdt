@@ -1,7 +1,25 @@
 """Video Control class file"""
 
+from collections import OrderedDict
 import math
 import cv2
+
+
+class LimitedSizeDict(OrderedDict):
+    def __init__(self, *args, **kwds):
+        self.size_limit = kwds.pop("size_limit", None)
+        OrderedDict.__init__(self, *args, **kwds)
+        self._check_size_limit()
+
+    def __setitem__(self, key, value):
+        OrderedDict.__setitem__(self, key, value)
+        self._check_size_limit()
+
+    def _check_size_limit(self):
+        if self.size_limit is not None:
+            while len(self) > self.size_limit:
+                self.popitem(last=False)
+
 
 class Video(object):
     """Video class"""
@@ -10,8 +28,10 @@ class Video(object):
         """Init method"""
 
         self._video_file = video_file
-        self._frames = None
         self._fps = None
+        self._frames_count = None
+        self._length = None
+        self._capture = None
 
         self._process_video_file()
 
@@ -32,17 +52,67 @@ class Video(object):
     def _process_video_file(self):
         """process video file"""
         #pylint: disable=E1101
-        capture = cv2.VideoCapture(self._video_file)
-        self._fps = capture.get(cv2.CAP_PROP_FPS)
+        self._capture = cv2.VideoCapture(self._video_file)
+        self._fps = self._capture.get(cv2.CAP_PROP_FPS)
+        print(self._fps)
+        self._frames_count = self._capture.get(cv2.CAP_PROP_FRAME_COUNT)
+        print(self._frames_count)
+        self._length = (self.frames_count/self._fps)*1000
+        print(self._length)
         #pylint: enable=E1101
-        self._frames = {}
-        time = 0
-        success, image = capture.read()
-        while success:
-            self._frames[time] = image
-            time += math.floor(1000/self._fps)
-            success, image = capture.read()
-            print(time)
+
+    def get_frame(self, time):
+        "get frame at time"
+        frame_idx = time // (1000/self._fps)
+
+        _, frame = self._capture.read()
+        print(1000/self._fps, frame_idx, self._capture.get(cv2.CAP_PROP_POS_FRAMES), self._capture.get(cv2.CAP_PROP_POS_MSEC), time)
+        return frame
+
+    @property
+    def fps(self):
+        """fps property"""
+        return self._fps
+
+    @fps.setter
+    def fps(self, value):
+        self._fps = value
+
+    @property
+    def frames_count(self):
+        """frames count property"""
+        return self._frames_count
+
+    @frames_count.setter
+    def frames_count(self, value):
+        self._frames_count = value
+
+    @property
+    def length(self):
+        """length property"""
+        return self._length
+
+    @length.setter
+    def length(self, value):
+        self._length = value
+
+        # #pylint: disable=E1101
+        # capture = cv2.VideoCapture(self._video_file)
+        # self._fps = capture.get(cv2.CAP_PROP_FPS)
+        # #pylint: enable=E1101
+        # self._frames = {}
+        # time = 0
+        # count = 0
+        # while capture.isOpened():
+        #     success, image = capture.read()
+        #     # self._frames[time] = image
+        #     time += math.floor(1000/self._fps)
+        #     count += 1
+        #     if(count % 50 == 0):
+        #         print(count, time)
+        #     if not success:
+        #         print('error', count, time)
+        # capture.release()
 
     # def next_processed_frame(self):
     #     """Next processed frame method"""

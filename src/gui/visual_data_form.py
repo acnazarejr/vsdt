@@ -36,21 +36,14 @@ class VisualDataForm(BaseForm):
     #     """Setup Button Clicked signal"""
     #     self.setupButtonClicked.emit()
 
-    # def update_frame(self):
-    #     """temp method"""
-    #
-    #     ret, result = self.video_control.next_processed_frame()
-    #
-    #     if ret:
-    #         frame = cv2.cvtColor(result[0], cv2.COLOR_BGR2RGB)
-    #         height, width, bpc = frame.shape
-    #         bpl = bpc * width
-    #         image = QtGui.QImage(frame.data, width, height, bpl, QtGui.QImage.Format_RGB888)
-    #         faces = []
-    #         for (x, y, w, h) in result[1]:
-    #             faces.append(QtCore.QRect(x, y, w, h))
-    #             # cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-    #         self.gui.videoViewWidget.update_frame(image, faces)
+    def update_frame(self, frame):
+        """temp method"""
+
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        height, width, bpc = frame.shape
+        bpl = bpc * width
+        image = QtGui.QImage(frame.data, width, height, bpl, QtGui.QImage.Format_RGB888)
+        self.gui.videoViewWidget.update_frame(image)
 
     def closeEvent(self, _):
         """Close event method"""
