@@ -7,8 +7,7 @@ import sys
 from PyQt5 import QtWidgets
 
 from gui.ui import MainWindowUiBase, MainWindowUi
-from gui import ControlForm
-from gui import VisualDataForm
+from gui import ControlForm, VisualDataForm, SensorDataForm
 
 from control import VisualData
 
@@ -27,9 +26,11 @@ class VSDT(MainWindowUiBase):
 
         self._visual_data_form = self._create_visual_data_form()
         self._control_form = self._create_control_form()
+        self._sensor_data_form = self._create_sensor_data_form()
 
         self.gui.splitter.addWidget(self._visual_data_form)
         self.gui.splitter.addWidget(self._control_form)
+        self.gui.splitter.addWidget(self._sensor_data_form)
 
         self.gui.visualSensorRadioButton.clicked.connect(self._operation_mode_clicked)
         self.gui.visualRadioButton.clicked.connect(self._operation_mode_clicked)
@@ -43,6 +44,11 @@ class VSDT(MainWindowUiBase):
     def _create_visual_data_form(self):
         """create visual data form"""
         form = VisualDataForm()
+        return form
+
+    def _create_sensor_data_form(self):
+        """create visual data form"""
+        form = SensorDataForm()
         return form
 
     def _create_control_form(self):

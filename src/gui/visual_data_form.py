@@ -5,7 +5,8 @@
 """Main Window class"""
 
 import cv2
-from PyQt5 import QtCore, QtGui
+
+from PyQt5 import QtGui
 
 from gui.ui import VisualDataFormUi
 from gui.base_form import BaseForm
@@ -25,16 +26,6 @@ class VisualDataForm(BaseForm):
         self.gui.videoViewWidget = FrameViewWidget(self.gui.viewGroupBox)
         self.gui.videoViewWidget.setObjectName("videoViewWidget")
         self.gui.viewGroupVerticalLayout.addWidget(self.gui.videoViewWidget)
-
-        # self.timer = QtCore.QTimer(self)
-        # self.timer.timeout.connect(self.update_frame)
-        # self.timer.start(1)
-
-        # self.gui.setupButton.clicked.connect(self.setup_button_clicked)
-
-    # def setup_button_clicked(self):
-    #     """Setup Button Clicked signal"""
-    #     self.setupButtonClicked.emit()
 
     def update_frame(self, frame):
         """temp method"""
