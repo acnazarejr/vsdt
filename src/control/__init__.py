@@ -1,1 +1,3 @@
-#pylint: disable=C0103
+"""Init file"""
+
+from control.visual_data import VisualData

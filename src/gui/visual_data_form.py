@@ -39,6 +39,9 @@ class VisualDataForm(BaseForm):
     def update_frame(self, frame):
         """temp method"""
 
+        if frame is None:
+            print('None')
+            return
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         height, width, bpc = frame.shape
         bpl = bpc * width

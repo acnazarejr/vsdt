@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>851</width>
-    <height>76</height>
+    <height>98</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,11 +21,15 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="buttonsHorizontalLayout">
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="previousButton">
           <property name="text">
-           <string>Previous</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/vsdt.qrc">
+            <normaloff>:/icons/previous.png</normaloff>:/icons/previous.png</iconset>
           </property>
          </widget>
         </item>
@@ -37,16 +41,24 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="nextButton">
           <property name="text">
-           <string>Next</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/vsdt.qrc">
+            <normaloff>:/icons/next.png</normaloff>:/icons/next.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="stopButton">
           <property name="text">
-           <string>Stop</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/vsdt.qrc">
+            <normaloff>:/icons/stop.png</normaloff>:/icons/stop.png</iconset>
           </property>
          </widget>
         </item>
@@ -54,6 +66,21 @@
          <widget class="QPushButton" name="playButton">
           <property name="text">
            <string>Play</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/vsdt.qrc">
+            <normaloff>:/icons/play.png</normaloff>:/icons/play.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="labelsHorizontalLayout">
+        <item>
+         <widget class="QLabel" name="timeLabel">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -64,6 +91,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/vsdt.qrc"/>
+ </resources>
  <connections/>
 </ui>
