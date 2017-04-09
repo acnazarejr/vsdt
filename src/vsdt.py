@@ -9,7 +9,7 @@ from PyQt5 import QtWidgets
 from gui.ui import MainWindowUiBase, MainWindowUi
 from gui import ControlForm, VisualDataForm, SensorDataForm
 
-from control import VisualData
+from control import VisualData, SensorData
 
 
 class VSDT(MainWindowUiBase):
@@ -39,6 +39,7 @@ class VSDT(MainWindowUiBase):
         self.gui.openVideoButton.clicked.connect(self._open_video_button_clicked)
 
         self._control_form.visual_data_updated.connect(self._visual_data_updated)
+        self._control_form.sensor_data_updated.connect(self._sensor_data_updated)
 
 
     def _create_visual_data_form(self):
@@ -49,6 +50,7 @@ class VSDT(MainWindowUiBase):
     def _create_sensor_data_form(self):
         """create visual data form"""
         form = SensorDataForm()
+        form.set_sensor_data(SensorData(""))
         return form
 
     def _create_control_form(self):
@@ -93,6 +95,11 @@ class VSDT(MainWindowUiBase):
         """control current updated slot"""
         # print(current_value)
         self._visual_data_form.update_frame(frame)
+
+    def _sensor_data_updated(self, central):
+        """control current updated slot"""
+        # print(current_value)
+        self._sensor_data_form.update_central(central)
 
 
 

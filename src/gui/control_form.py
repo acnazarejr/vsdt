@@ -15,6 +15,7 @@ class ControlForm(BaseForm):
     """Main Window class"""
 
     visual_data_updated = QtCore.pyqtSignal(object)
+    sensor_data_updated = QtCore.pyqtSignal(object)
 
     def __init__(self, parent=None):
         """Init method"""
@@ -140,3 +141,4 @@ class ControlForm(BaseForm):
 
         frame = self._visual_data.get_frame(self._current_time)
         self.visual_data_updated.emit(frame)
+        self.sensor_data_updated.emit(self._current_time)
