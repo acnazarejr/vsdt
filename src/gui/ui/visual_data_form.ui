@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Visual Data</string>
+      <string/>
      </property>
      <layout class="QVBoxLayout" name="viewGroupVerticalLayout"/>
     </widget>

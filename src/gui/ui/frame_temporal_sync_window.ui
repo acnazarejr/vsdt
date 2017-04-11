@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>601</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame Temporal Synchronization</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../res/vsdt.qrc">
+    <normaloff>:/icons/frame_timestamp.png</normaloff>:/icons/frame_timestamp.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="optionsGroupBox">
+      <property name="title">
+       <string>Options</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="videoFileLabel">
+           <property name="text">
+            <string>Video File</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="videoFileField">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="openVideoButton">
+           <property name="text">
+            <string>Open Video</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../res/vsdt.qrc">
+             <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="framesViewGroupBox">
+      <property name="title">
+       <string>Frames View</string>
+      </property>
+      <layout class="QVBoxLayout" name="framesViewGroupVerticalLayout"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="../res/vsdt.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -4,30 +4,36 @@
 #pylint: disable=E0401
 """Main Window class"""
 
+from enum import Enum
 from PyQt5 import QtCore, QtGui
 
-from gui.ui import ControlFormUi
+from gui.ui import ControlWidgetUi
 from gui.base_form import BaseForm
 
-#from app.modules.sensors.webcam import WebCam
+class ControlMode(Enum):
+    """Control Mode enum"""
+    FRAME = 1
+    TIME = 2
+    FRAME_TIME = 3
 
-class ControlForm(BaseForm):
-    """Main Window class"""
+class ControlWidget(BaseForm):
+    """Control Widget class"""
 
-    visual_data_updated = QtCore.pyqtSignal(object)
-    sensor_data_updated = QtCore.pyqtSignal(object)
+    time_updated = QtCore.pyqtSignal(object)
+    step_updated = QtCore.pyqtSignal(object)
 
     def __init__(self, parent=None):
         """Init method"""
-        BaseForm.__init__(self, parent, ControlFormUi)
+        BaseForm.__init__(self, parent, ControlWidgetUi)
 
         self._start_time = None
         self._end_time = None
         self._interval = None
+
         self._current_time = None
         self._on_play = False
 
-        self._visual_data = None
+        self._operation_mode = ControlMode.FRAME_TIME
 
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._on_play_run)
@@ -45,27 +51,53 @@ class ControlForm(BaseForm):
         self._reflesh_time_label()
 
 
-    def set_visual_data(self, visual_data):
-        """Update control values"""
-        self._visual_data = visual_data
-        self._start_time = self._visual_data.start_time
-        self._end_time = self._visual_data.end_time
-        self._interval = self._visual_data.interval
-        if self._check_consistency():
-            self._current_time = self._start_time
-            self.gui.slider.setMinimum(self._start_time)
-            self.gui.slider.setMaximum(self._end_time)
-            self.update_current_time()
+    def set_control_values(self, start_time=None, end_time=None, interval=None):
+        """Set control values"""
+        self._start_time = start_time
+        self._end_time = end_time
+        self._interval = interval
+        self.reset()
+
+    def set_enable(self, value):
+        """Set enable or not"""
+        if self._check_consistency:
+            self.setEnabled(value)
+        else:
+            self.setEnabled(False)
+        self.reset()
+
+    def reset(self):
+        """Reset controls"""
+        self._current_time = self._start_time
+        self.gui.slider.setMinimum(self._start_time)
+        self.gui.slider.setMaximum(self._end_time)
+        self.timer.stop()
+        self._on_play = False
+        self.update_current_time()
+
+    def _check_consistency(self):
+        """Check control values consistency"""
+        if self._start_time <= self._end_time:
+            return False
+        return True
+
+
+    # def set_visual_data(self, visual_data):
+    #     """Update control values"""
+    #     self._visual_data = visual_data
+    #     self._start_time = self._visual_data.start_time
+    #     self._end_time = self._visual_data.end_time
+    #     self._interval = self._visual_data.interval
+    #     if self._check_consistency():
+    #         self._current_time = self._start_time
+    #         self.gui.slider.setMinimum(self._start_time)
+    #         self.gui.slider.setMaximum(self._end_time)
+    #         self.update_current_time()
 
     def _reflesh_time_label(self):
         current = str(self._current_time) if self._current_time is not None else '-----'
         end = str(self._end_time) if self._end_time is not None else '-----'
         self.gui.timeLabel.setText("{} / {}".format(current, end))
-
-    def _check_consistency(self):
-        """Check visual and sensor data consistency"""
-        self.setDisabled(False)
-        return True
 
     def _play_pause_button_clicked(self):
         """Play Button Clicked signal"""
@@ -78,8 +110,7 @@ class ControlForm(BaseForm):
         """Play Button Clicked signal"""
         if self._on_play:
             self.pause()
-        self._on_play = False
-        self._current_time = self._start_time
+        self.reset()
         self.update_current_time()
 
     def _next_button_clicked(self):
@@ -139,6 +170,5 @@ class ControlForm(BaseForm):
         self.gui.slider.setValue(self._current_time)
         self._reflesh_time_label()
 
-        frame = self._visual_data.get_frame(self._current_time)
-        self.visual_data_updated.emit(frame)
-        self.sensor_data_updated.emit(self._current_time)
+        self.time_updated.emit(self._current_time)
+        self.step_updated.emit(self._current_time // self._interval)

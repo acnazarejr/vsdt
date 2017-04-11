@@ -36,6 +36,9 @@ class VisualData(object):
         self._video_file = video_file
         self._capture = cv2.VideoCapture(self._video_file)
 
+        if not self._capture.isOpened():
+            return
+
         self._fps = self._capture.get(cv2.CAP_PROP_FPS)
         self._frames_count = self._capture.get(cv2.CAP_PROP_FRAME_COUNT)
 
@@ -64,6 +67,10 @@ class VisualData(object):
     def _convert_time_to_frame_id(self, time):
         """given a timestamp, convert it to frame id sequence"""
         return time//self._interval
+
+    def is_opened(self):
+        """returns if video data is opened"""
+        return self._capture.isOpened()
 
 
     @property
