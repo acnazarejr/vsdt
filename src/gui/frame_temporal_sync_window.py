@@ -35,10 +35,12 @@ class FrameTemporalSyncWindow(QtWidgets.QMainWindow):
     def _open_video_button_clicked(self):
         """Open video button clicked signal"""
         self._visual_data = open_visual_data(self)
-        self._control_widget.set_control_values(start_time=self._visual_data.start_time,
-                                                end_time=self._visual_data.end_time,
-                                                interval=self._visual_data.interval)
-        self._control_widget.set_enable(True)
+        if self._visual_data is not None:
+            self.gui.videoFileField.setText(self._visual_data.video_file)
+            self._control_widget.set_control_values(start_time=self._visual_data.start_time,
+                                                    end_time=self._visual_data.end_time,
+                                                    interval=self._visual_data.interval)
+            self._control_widget.set_enable(True)
 
     def _visual_data_updated(self, time):
         """control current updated slot"""

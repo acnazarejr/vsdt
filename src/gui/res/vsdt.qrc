@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>goto.png</file>
     <file>app.png</file>
     <file>frame_timestamp.png</file>
     <file>open.png</file>

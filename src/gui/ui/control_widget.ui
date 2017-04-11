@@ -29,31 +29,13 @@
    <item>
     <layout class="QHBoxLayout" name="buttonsHorizontalLayout">
      <item>
-      <widget class="QPushButton" name="previousButton">
+      <widget class="QPushButton" name="playButton">
        <property name="text">
-        <string/>
+        <string>Play</string>
        </property>
        <property name="icon">
         <iconset resource="../res/vsdt.qrc">
-         <normaloff>:/icons/previous.png</normaloff>:/icons/previous.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="slider">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="nextButton">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../res/vsdt.qrc">
-         <normaloff>:/icons/next.png</normaloff>:/icons/next.png</iconset>
+         <normaloff>:/icons/play.png</normaloff>:/icons/play.png</iconset>
        </property>
       </widget>
      </item>
@@ -69,24 +51,86 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="playButton">
+      <widget class="QLabel" name="currentLabel">
        <property name="text">
-        <string>Play</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../res/vsdt.qrc">
-         <normaloff>:/icons/play.png</normaloff>:/icons/play.png</iconset>
+        <string>00:00:00.000</string>
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="labelsHorizontalLayout">
      <item>
-      <widget class="QLabel" name="timeLabel">
+      <widget class="QSlider" name="slider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lenghtLabel">
        <property name="text">
-        <string>teste</string>
+        <string>00:00:00.000</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="previousButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/vsdt.qrc">
+         <normaloff>:/icons/previous.png</normaloff>:/icons/previous.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="currentStepField">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="totalStepsLabel">
+       <property name="text">
+        <string>of ####</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="nextButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/vsdt.qrc">
+         <normaloff>:/icons/next.png</normaloff>:/icons/next.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="gotoButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/vsdt.qrc">
+         <normaloff>:/icons/goto.png</normaloff>:/icons/goto.png</iconset>
        </property>
       </widget>
      </item>

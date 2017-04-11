@@ -102,3 +102,8 @@ class VisualData(object):
     def length(self):
         """length property"""
         return self._length
+
+    @property
+    def video_file(self):
+        """length property"""
+        return self._video_file

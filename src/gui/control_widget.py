@@ -44,7 +44,6 @@ class ControlWidget(BaseForm):
         self.gui.previousButton.clicked.connect(self._previous_button_clicked)
         self.gui.nextButton.clicked.connect(self._next_button_clicked)
 
-        self.gui.slider.valueChanged.connect(self._slider_value_changed)
         self.gui.slider.sliderMoved.connect(self._slider_moved)
 
         self.setDisabled(True)
@@ -68,11 +67,11 @@ class ControlWidget(BaseForm):
 
     def reset(self):
         """Reset controls"""
+        if self._on_play:
+            self.pause()
         self._current_time = self._start_time
         self.gui.slider.setMinimum(self._start_time)
         self.gui.slider.setMaximum(self._end_time)
-        self.timer.stop()
-        self._on_play = False
         self.update_current_time()
 
     def _check_consistency(self):
@@ -81,20 +80,7 @@ class ControlWidget(BaseForm):
             return False
         return True
 
-
-    # def set_visual_data(self, visual_data):
-    #     """Update control values"""
-    #     self._visual_data = visual_data
-    #     self._start_time = self._visual_data.start_time
-    #     self._end_time = self._visual_data.end_time
-    #     self._interval = self._visual_data.interval
-    #     if self._check_consistency():
-    #         self._current_time = self._start_time
-    #         self.gui.slider.setMinimum(self._start_time)
-    #         self.gui.slider.setMaximum(self._end_time)
-    #         self.update_current_time()
-
-    def _reflesh_time_label(self):
+    def _reflesh_info(self):
         current = str(self._current_time) if self._current_time is not None else '-----'
         end = str(self._end_time) if self._end_time is not None else '-----'
         self.gui.timeLabel.setText("{} / {}".format(current, end))
@@ -108,10 +94,7 @@ class ControlWidget(BaseForm):
 
     def _stop_button_clicked(self):
         """Play Button Clicked signal"""
-        if self._on_play:
-            self.pause()
         self.reset()
-        self.update_current_time()
 
     def _next_button_clicked(self):
         """Play Button Clicked signal"""
@@ -122,12 +105,6 @@ class ControlWidget(BaseForm):
         """Play Button Clicked signal"""
         self._current_time -= self._interval
         self.update_current_time()
-
-    def _slider_value_changed(self, value):
-        """Slider value changed signal"""
-        # self._current_time = value
-        # print(value)
-        pass
 
     def _slider_moved(self, value):
         """Slider value changed signal"""
