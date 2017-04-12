@@ -7,7 +7,7 @@ import sys
 from PyQt5 import QtWidgets
 
 from gui.ui import MainWindowUiBase, MainWindowUi
-from gui import FrameTemporalSyncWindow
+from gui import VisualDataManagerWindow, SensorDataManagerWindow
 
 
 class VSDT(MainWindowUiBase):
@@ -20,11 +20,12 @@ class VSDT(MainWindowUiBase):
         self.gui = MainWindowUi()
         self.gui.setupUi(self)
 
-        self._frame_temporal_sync_window = FrameTemporalSyncWindow()
+        self._visual_data_manager_window = VisualDataManagerWindow()
+        self._sensor_data_manager_window = SensorDataManagerWindow()
 
         self._connect_actions()
 
-        self._frame_temporal_sync_window.show()
+        self._sensor_data_manager_window.show()
 
         # #self._video_control = VideoControl(Raspicam(640, 480, 15))
         #
@@ -47,11 +48,16 @@ class VSDT(MainWindowUiBase):
 
     def _connect_actions(self):
         """Connect menu bar actions"""
-        self.gui.actionFrameTemporalSync.triggered.connect(self._open_frame_temporal_sync)
+        self.gui.actionVisualDataManager.triggered.connect(self._open_visual_data_manager)
+        self.gui.actionSensorDataManager.triggered.connect(self._open_sensor_data_manager)
 
-    def _open_frame_temporal_sync(self):
+    def _open_visual_data_manager(self):
         """Open the frame temporal sync tool"""
-        self._frame_temporal_sync_window.show()
+        self._visual_data_manager_window.show()
+
+    def _open_sensor_data_manager(self):
+        """Open the frame temporal sync tool"""
+        self._sensor_data_manager_window.show()
 
     # def _create_visual_data_form(self):
     #     """create visual data form"""

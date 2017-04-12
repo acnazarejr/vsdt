@@ -7,20 +7,20 @@
 
 import os
 import dateutil
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtWidgets
 
-from gui.ui import FrameTemporalSyncWindowUi
+from gui.ui import VisualDataManagerWindowUi
 from gui.control_widget import ControlWidget
 from gui.visual_data_form import VisualDataForm
 from gui.utils import open_visual_data
 
-class FrameTemporalSyncWindow(QtWidgets.QMainWindow):
+class VisualDataManagerWindow(QtWidgets.QMainWindow):
     """Main Window class"""
 
     def __init__(self, parent=None):
         """Init method"""
         QtWidgets.QMainWindow.__init__(self, parent)
-        self.gui = FrameTemporalSyncWindowUi()
+        self.gui = VisualDataManagerWindowUi()
         self.gui.setupUi(self)
 
         self._visual_data = None

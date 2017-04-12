@@ -38,7 +38,8 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionFrameTemporalSync"/>
+    <addaction name="actionVisualDataManager"/>
+    <addaction name="actionSensorDataManager"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -50,13 +51,22 @@
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionFrameTemporalSync">
+  <action name="actionVisualDataManager">
    <property name="icon">
     <iconset resource="../res/vsdt.qrc">
      <normaloff>:/icons/frame_timestamp.png</normaloff>:/icons/frame_timestamp.png</iconset>
    </property>
    <property name="text">
-    <string>Frame Temporal Sync</string>
+    <string>Visual Data Manager</string>
+   </property>
+  </action>
+  <action name="actionSensorDataManager">
+   <property name="icon">
+    <iconset resource="../res/vsdt.qrc">
+     <normaloff>:/icons/sensor_manager.png</normaloff>:/icons/sensor_manager.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sensor Data Manager</string>
    </property>
   </action>
  </widget>

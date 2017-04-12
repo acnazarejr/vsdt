@@ -7,12 +7,15 @@ import dateutil
 
 import cv2
 from control import utils
+from models.data import Data
 
-class VisualData(object):
+class VisualData(Data):
     """Visual Data class"""
 
     def __init__(self, video_file, json_file_name=None):
         """Init method"""
+
+        super(VisualData, self).__init__()
 
         #pylint: disable=E1101
         self._video_file = video_file
@@ -24,10 +27,6 @@ class VisualData(object):
         self._fps = self._capture.get(cv2.CAP_PROP_FPS)
         self._frames_count = int(self._capture.get(cv2.CAP_PROP_FRAME_COUNT))
         self._interval = (1000/self._fps)
-
-        self._length = None
-        self._start_time = None
-        self._end_time = None
 
         if json_file_name is None:
             self._timestamps = [None] * self._frames_count
@@ -123,29 +122,9 @@ class VisualData(object):
         return self._fps
 
     @property
-    def start_time(self):
-        """start time property"""
-        return self._start_time
-
-    @property
-    def end_time(self):
-        """end time property"""
-        return self._end_time
-
-    @property
-    def interval(self):
-        """start time property"""
-        return self._interval
-
-    @property
     def frames_count(self):
         """frames count property"""
         return self._frames_count
-
-    @property
-    def length(self):
-        """length property"""
-        return self._length
 
     @property
     def video_file(self):
