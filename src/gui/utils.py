@@ -23,5 +23,8 @@ def open_visual_data(parent):
             if reply != QtWidgets.QMessageBox.Yes:
                 control_var = True
         else:
+            sync_file = os.path.splitext(video_file)[0] + '.json'
+            if os.path.isfile(sync_file):
+                visual_data.load_json(sync_file)
             control_var = True
     return visual_data

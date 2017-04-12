@@ -26,7 +26,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="openVideoLayout">
          <item>
           <widget class="QLabel" name="videoFileLabel">
            <property name="text">
@@ -37,7 +37,10 @@
          <item>
           <widget class="QLineEdit" name="videoFileField">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -49,6 +52,92 @@
            <property name="icon">
             <iconset resource="../res/vsdt.qrc">
              <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="syncLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="currentTimestampLabel">
+           <property name="text">
+            <string>Current timestamp:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="currentTimestampField">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="inputMask">
+            <string>9999-99-99T99:99:99.999999</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="syncButton">
+           <property name="text">
+            <string>Synchronize</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../res/vsdt.qrc">
+             <normaloff>:/icons/sinchronize.png</normaloff>:/icons/sinchronize.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="importButton">
+           <property name="text">
+            <string>Import JSON</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../res/vsdt.qrc">
+             <normaloff>:/icons/import.png</normaloff>:/icons/import.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="exportButton">
+           <property name="text">
+            <string>Export JSON</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../res/vsdt.qrc">
+             <normaloff>:/icons/export.png</normaloff>:/icons/export.png</iconset>
            </property>
           </widget>
          </item>

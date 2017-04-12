@@ -53,7 +53,7 @@
      <item>
       <widget class="QLabel" name="currentLabel">
        <property name="text">
-        <string>00:00:00.000</string>
+        <string>--:--:--.---</string>
        </property>
       </widget>
      </item>
@@ -65,9 +65,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lenghtLabel">
+      <widget class="QLabel" name="lengthLabel">
        <property name="text">
-        <string>00:00:00.000</string>
+        <string>--:--:--.---</string>
        </property>
       </widget>
      </item>
@@ -103,23 +103,11 @@
          <height>16777215</height>
         </size>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="totalStepsLabel">
-       <property name="text">
-        <string>of ####</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="nextButton">
        <property name="text">
         <string/>
        </property>
-       <property name="icon">
-        <iconset resource="../res/vsdt.qrc">
-         <normaloff>:/icons/next.png</normaloff>:/icons/next.png</iconset>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -131,6 +119,24 @@
        <property name="icon">
         <iconset resource="../res/vsdt.qrc">
          <normaloff>:/icons/goto.png</normaloff>:/icons/goto.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="totalStepsLabel">
+       <property name="text">
+        <string>of ######</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="nextButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/vsdt.qrc">
+         <normaloff>:/icons/next.png</normaloff>:/icons/next.png</iconset>
        </property>
       </widget>
      </item>
