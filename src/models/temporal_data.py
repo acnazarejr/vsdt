@@ -13,7 +13,6 @@ class TemporalData(Data, ABC):
         Data.__init__(self, data_id)
         self._id = None
         self._interval = None
-        self._length = None
         self._start_time = None
         self._end_time = None
 
@@ -35,4 +34,4 @@ class TemporalData(Data, ABC):
     @property
     def length(self):
         """length property"""
-        return self._length
+        pass

@@ -17,12 +17,11 @@ class VisualData(TemporalData):
 
         TemporalData.__init__(self, data_id)
         self._json_file_name = json_file_name
-        self._capture = None
+        self._video_capture = None
 
         self._fps = None
         self._frames_count = None
         self._interval = None
-        self._length = None
         self._start_time = None
         self._end_time = None
         self._json_dict = {}
@@ -30,8 +29,18 @@ class VisualData(TemporalData):
         if json_file_name is not None:
             with open(json_file_name) as json_file:
                 self._json_dict = json.load(json_file)
+                self._fps = self._json_dict['fps']
+                self._frames_count = self._json_dict['frames_count']
+                self._interval = self._json_dict['interval']
+                self._start_time = self._json_dict['start_time']
+                self._end_time = self._json_dict['end_time']
 
         ###########################
+
+
+    def has_video(self):
+        """check if visual data has video"""
+        return self._video_capture is not None
 
         # #pylint: disable=E1101
         # self._video_file = video_file

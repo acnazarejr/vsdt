@@ -36,7 +36,7 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
         self.gui.dataIDField.setText(data_id)
         self.gui.dataIDField.textChanged.connect(self._data_id_field_changed)
 
-        # self.gui.openVideoButton.clicked.connect(self._open_video_button_clicked)
+        self.gui.addVideoButton.clicked.connect(self._add_video_button_clicked)
         # self.gui.syncButton.clicked.connect(self._sync_button_clicked)
         # self.gui.exportButton.clicked.connect(self._export_button_clicked)
         # self.gui.importButton.clicked.connect(self._import_button_clicked)
@@ -45,8 +45,7 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
         # reg = '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{0,6}'
         # validator = QtGui.QRegExpValidator(QtCore.QRegExp(reg))
         # self.gui.currentTimestampField.setValidator(validator)
-
-        self._sync_options_enable(False)
+        self._sync_options_enable(self._visual_data.has_video())
 
     def get_title(self):
         """Get window name"""
@@ -59,14 +58,18 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
 
     # def _open_video_button_clicked(self):
     #     """Open video button clicked signal"""
-    #     self._visual_data = open_visual_data(self)
-    #     if self._visual_data is not None:
-    #         self.gui.videoFileField.setText(self._visual_data.video_file)
-    #         self._control_widget.set_control_values(start_time=self._visual_data.start_time,
-    #                                                 end_time=self._visual_data.end_time,
-    #                                                 interval=self._visual_data.interval)
-    #         self._control_widget.set_enable(True)
-    #         self._sync_options_enable(True)
+    #     video_file_name = QtWidgets.QFileDialog.getOpenFileName(self, 'Open video File',
+    #                                                             'D:\\',
+    #                                                             'Video Files (*.avi, *.mp4)')[0]
+    #     if video_file_name is not None:
+    #         self._visual_data.set_video(video_file_name)
+        # if self._visual_data is not None:
+        #     self.gui.videoFileField.setText(self._visual_data.video_file)
+        #     self._control_widget.set_control_values(start_time=self._visual_data.start_time,
+        #                                             end_time=self._visual_data.end_time,
+        #                                             interval=self._visual_data.interval)
+        #     self._control_widget.set_enable(True)
+        #     self._sync_options_enable(True)
     #
     # def _sync_button_clicked(self):
     #     """Symc button clicked signal"""
@@ -108,8 +111,7 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
     #
     def _sync_options_enable(self, value):
         """enable or disabel sync options"""
-        # self.gui.currentTimestampField.setEnabled(value)
-        # self.gui.currentTimestampLabel.setEnabled(value)
-        # self.gui.exportButton.setEnabled(value)
-        # self.gui.importButton.setEnabled(value)
-        # self.gui.syncButton.setEnabled(value)
+        self.gui.currentTimestampField.setEnabled(value)
+        self.gui.currentTimestampLabel.setEnabled(value)
+        self.gui.saveButton.setEnabled(value)
+        self.gui.syncButton.setEnabled(value)
