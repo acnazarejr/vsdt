@@ -1,3 +1,4 @@
+#pylint: disable=R0903
 """Data super class"""
 
 from abc import ABC, abstractmethod
@@ -6,29 +7,11 @@ class Data(ABC):
     """Abstract class for sensors"""
 
     @abstractmethod
-    def __init__(self):
+    def __init__(self, data_id=None):
         """Init method"""
-        self._interval = None
-        self._length = None
-        self._start_time = None
-        self._end_time = None
+        self._id = None
 
     @property
-    def start_time(self):
+    def data_id(self):
         """start time property"""
-        return self._start_time
-
-    @property
-    def end_time(self):
-        """end time property"""
-        return self._end_time
-
-    @property
-    def interval(self):
-        """start time property"""
-        return self._interval
-
-    @property
-    def length(self):
-        """length property"""
-        return self._length
+        return self._id

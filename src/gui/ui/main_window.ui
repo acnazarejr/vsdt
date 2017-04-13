@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>919</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,14 +18,31 @@
     <normaloff>:/icons/app.png</normaloff>:/icons/app.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout"/>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QMdiArea" name="mdiArea">
+      <property name="viewMode">
+       <enum>QMdiArea::TabbedView</enum>
+      </property>
+      <property name="documentMode">
+       <bool>true</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="tabsMovable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>919</width>
      <height>21</height>
     </rect>
    </property>
@@ -34,20 +51,20 @@
      <string>File</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuTool">
-    <property name="title">
-     <string>Tools</string>
-    </property>
-    <addaction name="actionVisualDataManager"/>
-    <addaction name="actionSensorDataManager"/>
-   </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
      <string>About</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuVisual_Data">
+    <property name="title">
+     <string>Visual Data</string>
+    </property>
+    <addaction name="newVisualDataAction"/>
+    <addaction name="openVisualDataAction"/>
+   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuTool"/>
+   <addaction name="menuVisual_Data"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -67,6 +84,16 @@
    </property>
    <property name="text">
     <string>Sensor Data Manager</string>
+   </property>
+  </action>
+  <action name="newVisualDataAction">
+   <property name="text">
+    <string>New Visual Data</string>
+   </property>
+  </action>
+  <action name="openVisualDataAction">
+   <property name="text">
+    <string>Open Visual Data</string>
    </property>
   </action>
  </widget>

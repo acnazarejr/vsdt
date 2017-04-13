@@ -5,23 +5,17 @@
 """Main Window class"""
 
 import cv2
-
 from PyQt5 import QtGui
-
-from gui.ui import VisualDataFormUi
-from gui.base_form import BaseForm
+from gui.ui import VisualDataViewWidgetUi
+from gui.base_widget import BaseWidget
 from gui.frame_view_widget import FrameViewWidget
 
-
-
-class VisualDataForm(BaseForm):
+class VisualDataViewWidget(BaseWidget):
     """Main Window class"""
-
-    # setupButtonClicked = QtCore.pyqtSignal()
 
     def __init__(self, parent=None):
         """Init method"""
-        BaseForm.__init__(self, parent, VisualDataFormUi)
+        BaseWidget.__init__(self, parent, VisualDataViewWidgetUi)
 
         self.gui.videoViewWidget = FrameViewWidget(self.gui.viewGroupBox)
         self.gui.videoViewWidget.setObjectName("videoViewWidget")

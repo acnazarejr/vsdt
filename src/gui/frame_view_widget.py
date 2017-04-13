@@ -3,7 +3,6 @@
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 
-
 class FrameViewWidget(QtWidgets.QWidget):
     """Video View class"""
 
@@ -14,8 +13,6 @@ class FrameViewWidget(QtWidgets.QWidget):
     def update_frame(self, frame):
         """frame property"""
         self._frame = frame
-        #size = frame.size()
-        #self.setMinimumSize(size)
         self.update()
 
     #pylint: disable=C0103

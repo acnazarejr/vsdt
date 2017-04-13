@@ -7,9 +7,8 @@
 import datetime
 from enum import Enum
 from PyQt5 import QtCore, QtGui
-
-from gui.ui import ControlWidgetUi
-from gui.base_form import BaseForm
+from gui.ui import TimeControlWidgetUi
+from gui.base_widget import BaseWidget
 
 from control import utils
 
@@ -19,7 +18,7 @@ class ControlMode(Enum):
     TIME = 2
     FRAME_TIME = 3
 
-class ControlWidget(BaseForm):
+class TimeControlWidget(BaseWidget):
     """Control Widget class"""
 
     time_updated = QtCore.pyqtSignal(object)
@@ -27,27 +26,23 @@ class ControlWidget(BaseForm):
 
     def __init__(self, parent=None):
         """Init method"""
-        BaseForm.__init__(self, parent, ControlWidgetUi)
+        BaseWidget.__init__(self, parent, TimeControlWidgetUi)
 
         self._start_time = None
         self._end_time = None
         self._interval = None
-
         self._current_time = None
         self._on_play = False
-
         self._operation_mode = ControlMode.FRAME_TIME
 
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._on_play_run)
-        #self.timer.start(1)
 
         self.gui.playButton.clicked.connect(self._play_pause_button_clicked)
         self.gui.stopButton.clicked.connect(self._stop_button_clicked)
         self.gui.previousButton.clicked.connect(self._previous_button_clicked)
         self.gui.nextButton.clicked.connect(self._next_button_clicked)
         self.gui.gotoButton.clicked.connect(self._goto_button_clicked)
-
         self.gui.slider.sliderMoved.connect(self._slider_moved)
 
         self.setDisabled(True)
@@ -55,7 +50,7 @@ class ControlWidget(BaseForm):
 
 
     def set_control_values(self, start_time=None, end_time=None, interval=None):
-        """Set control values"""        
+        """Set control values"""
         self._start_time = start_time
         self._end_time = end_time
         self._interval = interval
@@ -102,7 +97,6 @@ class ControlWidget(BaseForm):
             length = utils.time_delta_in_milliseconds(self._end_time, self._start_time)
             self.gui.totalStepsLabel.setText(
                 'of {num:06d}'.format(num=int(length // self._interval)))
-
 
     def _play_pause_button_clicked(self):
         """Play Button Clicked signal"""

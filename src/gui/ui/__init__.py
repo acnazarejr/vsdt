@@ -9,17 +9,11 @@ DIR = os.path.dirname(os.path.realpath(__file__))
 
 MainWindowUi, MainWindowUiBase = uic.loadUiType(os.path.join(DIR, 'main_window.ui'))
 
-VisualDataManagerWindowUi, VisualDataManagerWindowUiBase = uic.loadUiType(
-    os.path.join(DIR, 'visual_data_manager_window.ui'))
+VisualDataManagerMDIWidgetUi, VisualDataManagerMDIWidgetUiBase = uic.loadUiType(
+    os.path.join(DIR, 'visual_data_manager_mdi_widget.ui'))
 
-SensorDataManagerWindowUi, SensorDataManagerWindowUiBase = uic.loadUiType(
-    os.path.join(DIR, 'sensor_data_manager_window.ui'))
+VisualDataViewWidgetUi, VisualDataViewWidgetUiBase = uic.loadUiType(
+    os.path.join(DIR, 'visual_data_view_widget.ui'))
 
-VisualDataFormUi, VisualDataFormUiBase = uic.loadUiType(
-    os.path.join(DIR, 'visual_data_form.ui'))
-
-SensorDataFormUi, SensorDataFormUiBase = uic.loadUiType(
-    os.path.join(DIR, 'sensor_data_form.ui'))
-
-ControlWidgetUi, ControlWidgetUiBase = uic.loadUiType(
-    os.path.join(DIR, 'control_widget.ui'))
+TimeControlWidgetUi, TimeControlWidgetUiBase = uic.loadUiType(
+    os.path.join(DIR, 'time_control_widget.ui'))

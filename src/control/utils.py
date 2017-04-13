@@ -2,7 +2,8 @@
 #pylint: disable=E0401
 """Util functions"""
 
-import dateutil, datetime
+import datetime
+import dateutil
 
 def milliseconds_to_timestamp(milliseconds):
     """method for milliseconds to timestamp converting"""

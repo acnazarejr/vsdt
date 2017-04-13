@@ -7,7 +7,7 @@ import sys
 from PyQt5 import QtWidgets
 
 from gui.ui import MainWindowUiBase, MainWindowUi
-from gui import VisualDataManagerWindow, SensorDataManagerWindow
+from gui import VisualDataManagerMDIWidget
 
 
 class VSDT(MainWindowUiBase):
@@ -20,12 +20,11 @@ class VSDT(MainWindowUiBase):
         self.gui = MainWindowUi()
         self.gui.setupUi(self)
 
-        self._visual_data_manager_window = VisualDataManagerWindow()
-        self._sensor_data_manager_window = SensorDataManagerWindow()
+        # self._visual_data_manager_window = VisualDataManagerWindow()
+        # self._sensor_data_manager_window = SensorDataManagerWindow()
 
         self._connect_actions()
 
-        self._sensor_data_manager_window.show()
 
         # #self._video_control = VideoControl(Raspicam(640, 480, 15))
         #
@@ -48,16 +47,19 @@ class VSDT(MainWindowUiBase):
 
     def _connect_actions(self):
         """Connect menu bar actions"""
-        self.gui.actionVisualDataManager.triggered.connect(self._open_visual_data_manager)
-        self.gui.actionSensorDataManager.triggered.connect(self._open_sensor_data_manager)
+        self.gui.newVisualDataAction.triggered.connect(self._new_visual_data_action)
 
-    def _open_visual_data_manager(self):
-        """Open the frame temporal sync tool"""
-        self._visual_data_manager_window.show()
 
-    def _open_sensor_data_manager(self):
-        """Open the frame temporal sync tool"""
-        self._sensor_data_manager_window.show()
+    def _new_visual_data_action(self):
+        """New visual data action"""
+        self._open_sub_window(VisualDataManagerMDIWidget())
+
+    def _open_sub_window(self, widget):
+        """Open a new MDI SubWindow"""
+        sub = self.gui.mdiArea.addSubWindow(widget)
+        sub.setWindowTitle(widget.get_title())
+        widget.title_updated.connect(sub.setWindowTitle)
+        sub.show()
 
     # def _create_visual_data_form(self):
     #     """create visual data form"""

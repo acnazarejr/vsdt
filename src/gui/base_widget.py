@@ -2,10 +2,9 @@
 """Base form class file"""
 
 from abc import abstractmethod
-
 from PyQt5 import QtWidgets
 
-class BaseForm(QtWidgets.QWidget):
+class BaseWidget(QtWidgets.QWidget):
     """Base Form class"""
 
     @abstractmethod
