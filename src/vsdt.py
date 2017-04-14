@@ -2,12 +2,16 @@
 #pylint: disable=R0903
 """Main app file"""
 
+import os
 import sys
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 from gui.ui import MainWindowUiBase, MainWindowUi
 from gui import VisualDataManagerMDIWidget
+from gui import MDISubWindow
+from gui import utils
+from models import VisualData
 
 
 class VSDT(MainWindowUiBase):
@@ -48,17 +52,34 @@ class VSDT(MainWindowUiBase):
     def _connect_actions(self):
         """Connect menu bar actions"""
         self.gui.newVisualDataAction.triggered.connect(self._new_visual_data_action)
+        self.gui.openVisualDataAction.triggered.connect(self._open_visual_data_action)
 
 
     def _new_visual_data_action(self):
         """New visual data action"""
-        self._open_sub_window(VisualDataManagerMDIWidget())
+        video_file = utils.get_open_file(self, 'Open Video File', 'Video files (*.mp4 *.avi)')
+        if video_file is not None:
+            working_dir = os.path.dirname(video_file)
+            visual_data = VisualData.create_from_video(video_file)
+            visual_data_manager_mdi_widget = VisualDataManagerMDIWidget(
+                visual_data, working_dir=working_dir, has_changes=True)
+            self._open_sub_window(visual_data_manager_mdi_widget)
+
+    def _open_visual_data_action(self):
+        """New visual data action"""
+        visual_data_file = utils.get_open_file(self, 'Open Visual Data', 'JSON File (*.json)')
+        if visual_data_file is not None:
+            working_dir = os.path.dirname(visual_data_file)
+            visual_data = VisualData(visual_data_file)
+            visual_data_manager_mdi_widget = VisualDataManagerMDIWidget(
+                visual_data, working_dir=working_dir, has_changes=False)
+            self._open_sub_window(visual_data_manager_mdi_widget)
 
     def _open_sub_window(self, widget):
         """Open a new MDI SubWindow"""
-        sub = self.gui.mdiArea.addSubWindow(widget)
-        sub.setWindowTitle(widget.get_title())
-        widget.title_updated.connect(sub.setWindowTitle)
+        sub = MDISubWindow()
+        sub.setWidget(widget)
+        self.gui.mdiArea.addSubWindow(sub)
         sub.show()
 
     # def _create_visual_data_form(self):

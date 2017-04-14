@@ -32,17 +32,6 @@
         <item>
          <widget class="QLineEdit" name="dataIDField"/>
         </item>
-        <item>
-         <widget class="QPushButton" name="addVideoButton">
-          <property name="text">
-           <string>Add Video</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../res/vsdt.qrc">
-            <normaloff>:/icons/add_video.png</normaloff>:/icons/add_video.png</iconset>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
@@ -68,16 +57,23 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="saveButton">
-          <property name="enabled">
-           <bool>false</bool>
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveButton">
           <property name="text">
            <string>Save</string>
           </property>
           <property name="icon">
            <iconset resource="../res/vsdt.qrc">
             <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+          </property>
+          <property name="shortcut">
+           <string>Enter</string>
           </property>
          </widget>
         </item>
@@ -117,9 +113,6 @@
         </item>
         <item>
          <widget class="QLabel" name="currentTimestampLabel">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
           <property name="text">
            <string>Current timestamp:</string>
           </property>
@@ -127,9 +120,6 @@
         </item>
         <item>
          <widget class="QLineEdit" name="currentTimestampField">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
           <property name="minimumSize">
            <size>
             <width>200</width>
@@ -152,9 +142,6 @@
         </item>
         <item>
          <widget class="QPushButton" name="syncButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
           <property name="text">
            <string>Synchronize</string>
           </property>

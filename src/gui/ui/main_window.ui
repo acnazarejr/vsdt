@@ -98,6 +98,9 @@
    <property name="text">
     <string>Open Visual Data</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+V</string>
+   </property>
   </action>
  </widget>
  <resources>

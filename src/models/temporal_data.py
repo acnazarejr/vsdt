@@ -8,9 +8,9 @@ class TemporalData(Data, ABC):
     """Abstract class for sensors"""
 
     @abstractmethod
-    def __init__(self, data_id=None):
+    def __init__(self):
         """Init method"""
-        Data.__init__(self, data_id)
+        Data.__init__(self)
         self._id = None
         self._interval = None
         self._start_time = None

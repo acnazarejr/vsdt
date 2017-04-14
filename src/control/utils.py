@@ -3,7 +3,7 @@
 """Util functions"""
 
 import datetime
-import dateutil
+import dateutil.parser
 
 def milliseconds_to_timestamp(milliseconds):
     """method for milliseconds to timestamp converting"""

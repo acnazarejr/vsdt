@@ -3,28 +3,44 @@
 """Util functions for gui"""
 
 import os.path
-from PyQt5 import QtWidgets
-from models import VisualData
+from PyQt5 import QtWidgets, QtCore
 
-def open_visual_data(parent):
-    """Dialog for open visual data"""
-    control_var = False
-    visual_data = None
-    while not control_var:
-        dialog_ret = QtWidgets.QFileDialog.getOpenFileName(parent, 'Open file', 'd:\\',
-                                                           "Video files (*.mp4 *.avi)")
-        video_file = dialog_ret[0]
-        visual_data = VisualData(video_file)
-        if (not os.path.isfile(video_file)) or (not visual_data.is_opened()):
-            msg = "Invalid video file. Do you want to retry?"
-            reply = QtWidgets.QMessageBox.question(parent, 'Message', msg,
-                                                   QtWidgets.QMessageBox.Yes,
-                                                   QtWidgets.QMessageBox.No)
-            if reply != QtWidgets.QMessageBox.Yes:
-                control_var = True
-        else:
-            sync_file = os.path.splitext(video_file)[0] + '.json'
-            if os.path.isfile(sync_file):
-                visual_data.load_json(sync_file)
-            control_var = True
-    return visual_data
+def get_settings():
+    """Get global qsettings"""
+    return QtCore.QSettings('vsdt', 'vsdt')
+
+def get_open_file(parent, title, file_filter, suggestion=None):
+    """Open a file and stores the last dir open"""
+    settings = get_settings()
+    last_dir = settings.value('last_dir', type=str)
+    if suggestion is None:
+        suggestion = last_dir
+    opened_file = QtWidgets.QFileDialog.getOpenFileName(parent, title, last_dir, file_filter)[0]
+    opened_file = opened_file if opened_file != '' else None
+    if opened_file is not None:
+        open_dir = os.path.dirname(opened_file)
+        settings.setValue('last_dir', open_dir)
+    return opened_file
+
+def get_save_file(parent, title, file_filter, suggestion=None):
+    """Open a file and stores the last dir open"""
+    settings = get_settings()
+    last_dir = settings.value('last_dir', type=str)
+    if suggestion is None:
+        suggestion = last_dir
+    saved_file = QtWidgets.QFileDialog.getSaveFileName(parent, title, suggestion, file_filter)[0]
+    saved_file = saved_file if saved_file != '' else None
+    return saved_file
+
+def save_message_box(parent=None):
+    """message box for save question"""
+    msg_box = QtWidgets.QMessageBox(parent)
+    msg_box.setIcon(QtWidgets.QMessageBox.Question)
+    # msg_box.setWindowModality(QtCore.ApplicationModal)
+    msg_box.setText("The data has been modified.")
+    msg_box.setInformativeText("Do you want to save your changes?")
+    msg_box.setStandardButtons(QtWidgets.QMessageBox.Save |
+                               QtWidgets.QMessageBox.Discard |
+                               QtWidgets.QMessageBox.Cancel)
+    msg_box.setDefaultButton(QtWidgets.QMessageBox.Save)
+    return msg_box.exec_()
