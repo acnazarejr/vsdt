@@ -36,7 +36,6 @@ def save_message_box(parent=None):
     """message box for save question"""
     msg_box = QtWidgets.QMessageBox(parent)
     msg_box.setIcon(QtWidgets.QMessageBox.Question)
-    # msg_box.setWindowModality(QtCore.ApplicationModal)
     msg_box.setText("The data has been modified.")
     msg_box.setInformativeText("Do you want to save your changes?")
     msg_box.setStandardButtons(QtWidgets.QMessageBox.Save |

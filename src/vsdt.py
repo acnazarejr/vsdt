@@ -5,7 +5,7 @@
 import os
 import sys
 
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets
 
 from gui.ui import MainWindowUiBase, MainWindowUi
 from gui import VisualDataManagerMDIWidget
