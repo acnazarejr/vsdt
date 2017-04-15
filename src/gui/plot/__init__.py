@@ -1,3 +1,3 @@
 """Init file"""
 
-from gui.plot.plot_canvas import PlotCanvas
+from gui.plot.plot_sensor_canvas import PlotSensorCanvas

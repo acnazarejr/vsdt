@@ -15,6 +15,7 @@ from gui.base_mdi_widget import BaseMDIWidget
 from models.sensor_data import SensorType
 from gui.time_control_widget import TimeControlWidget
 from gui.sensor_data_view_widget import SensorDataViewWidget
+import control.utils
 
 class SensorDataManagerMDIWidget(BaseMDIWidget):
     """Main Window class"""
@@ -34,9 +35,12 @@ class SensorDataManagerMDIWidget(BaseMDIWidget):
 
         self._sensor_data_view_widget = SensorDataViewWidget()
         self._time_control_widget = TimeControlWidget()
-        self.gui.dataVisualizationGroupVerticalLayout.addWidget(self._sensor_data_view_widget)
-        self.gui.dataVisualizationGroupVerticalLayout.addWidget(self._time_control_widget)
+        self._dataVisualizationGroupBoxLayout = QtWidgets.QVBoxLayout()
+        self._dataVisualizationGroupBoxLayout.addWidget(self._sensor_data_view_widget)
+        self._dataVisualizationGroupBoxLayout.addWidget(self._time_control_widget)
+        self.gui.dataVisualizationGroupBox.setLayout(self._dataVisualizationGroupBoxLayout)
         self._time_control_widget.time_updated.connect(self._time_updated)
+        self._data_view_refresh()
 
         self.gui.dataIDField.setText(self._sensor_data.data_id)
         self.gui.dataIDField.textChanged.connect(self._data_id_field_changed)
@@ -142,18 +146,37 @@ class SensorDataManagerMDIWidget(BaseMDIWidget):
     def _data_view_refresh(self):
         selected_itens = self.gui.sensorDataTree.selectedItems()
         if selected_itens:
-            sensor = selected_itens[0].text(1)
-            sensor_data = self._sensor_data.sensors[sensor]
-            self._time_control_widget.set_control_values(start_time=sensor_data[0]['timestamp'],
-                                                         end_time=sensor_data[-1]['timestamp'],
-                                                         interval=20)
-            self._time_control_widget.show()
+            selected_sensors = {}
+            for selected_item in selected_itens:
+                sensor = selected_item.text(1)
+                selected_sensors[sensor] = self._sensor_data.sensor_to_list(sensor)
+            self._update_time_control(selected_sensors)
             self._time_control_widget.set_enable(True)
-            self._sensor_data_view_widget.set_sensor_data(sensor_data)
+            self._time_control_widget.show()
+            self._sensor_data_view_widget.show()
+            self._sensor_data_view_widget.set_sensor_data('accelerometer', selected_sensors['accelerometer'])
         else:
-            self._sensor_data_view_widget.clear()
-            self._time_control_widget.hide()
+            self._sensor_data_view_widget.hide()
             self._time_control_widget.set_enable(False)
+            self._time_control_widget.hide()
+
+    def _update_time_control(self, selected_sensors):
+        """update time control"""
+        starts = []
+        ends = []
+        average_intervals = []
+        for data in selected_sensors.values():
+            starts.append(data[0][0])
+            ends.append(data[-1][0])
+            interval = control.utils.time_delta_in_milliseconds(
+                data[-1][0], data[0][0]) / float(len(data))
+            average_intervals.append(interval)
+        start_time = min(starts) if starts else None
+        end_time = max(ends) if ends else None
+        interval = min(average_intervals) if average_intervals else None
+        self._time_control_widget.set_control_values(start_time=start_time,
+                                                     end_time=end_time,
+                                                     interval=interval)
 
 
     def _refresh_tree_view(self):

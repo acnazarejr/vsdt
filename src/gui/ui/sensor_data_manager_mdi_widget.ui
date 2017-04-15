@@ -33,6 +33,12 @@
           <layout class="QVBoxLayout" name="treeVerticalLayout">
            <item>
             <widget class="QTreeWidget" name="sensorDataTree">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>150</height>
+              </size>
+             </property>
              <property name="indentation">
               <number>20</number>
              </property>
@@ -150,7 +156,6 @@
       <property name="title">
        <string>Data Visualization</string>
       </property>
-      <layout class="QVBoxLayout" name="dataVisualizationGroupVerticalLayout"/>
      </widget>
     </widget>
    </item>

@@ -77,14 +77,14 @@ class SensorData(TemporalData):
     def add_sensor(self, sensor_type, data):
         """add data"""
         self._sensors[sensor_type] = data
-        self.limits_calculation()
+        self._limits_calculation()
 
     def remove_sensor(self, sensor_type):
         """remove data"""
         del self._sensors[sensor_type]
-        self.limits_calculation()
+        self._limits_calculation()
 
-    def limits_calculation(self):
+    def _limits_calculation(self):
         """limits calculation"""
         starts = []
         ends = []
@@ -93,6 +93,15 @@ class SensorData(TemporalData):
             ends.append(data[-1]['timestamp'])
         self._start_time = min(starts) if starts else None
         self._end_time = max(ends) if ends else None
+
+    def sensor_to_list(self, sensor_type):
+        """convert sensor to a list of tuples"""
+        ret_list = []
+        for data in self._sensors[sensor_type]:
+            timestamp = data['timestamp']
+            values = tuple(data['values'].values())
+            ret_list.append((timestamp, ) + values)        
+        return ret_list
 
     def has_sensor(self, sensor_type):
         """check if sensor data has sensor_type"""

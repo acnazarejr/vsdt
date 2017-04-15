@@ -6,7 +6,7 @@
 
 from gui.ui import SensorDataViewWidgetUi
 from gui.base_widget import BaseWidget
-from gui.plot import PlotCanvas
+from gui.plot import PlotSensorCanvas
 
 class SensorDataViewWidget(BaseWidget):
     """Main Window class"""
@@ -15,23 +15,23 @@ class SensorDataViewWidget(BaseWidget):
         """Init method"""
         BaseWidget.__init__(self, parent, SensorDataViewWidgetUi)
 
-        self._plot_canvas = None
+        self._plot_canvas = PlotSensorCanvas()
         self._sensor_data = None
 
-    def set_sensor_data(self, sensor_data):
+        self.gui.splitter.insertWidget(0, self._plot_canvas)
+
+    def set_sensor_data(self, sensor_name, sensor_data):
         """set sensor data"""
-        if self._plot_canvas is not None:
-            self.clear()
         self._sensor_data = sensor_data
-        self._plot_canvas = PlotCanvas(self._sensor_data)
-        self.gui.viewGroupVerticalLayout.addWidget(self._plot_canvas)
+        self._plot_canvas.add_subplot(111, sensor_name, sensor_data)
+        self._plot_canvas.update_central(sensor_data[0][0])
 
-    def clear(self):
-        """clear"""
-        self._plot_canvas.close()
-        self._plot_canvas = None
-        self._sensor_data = None
-
+    # def clear(self):
+    #     """clear"""
+    #     self._plot_canvas.close()
+    #     self._plot_canvas = None
+    #     self._sensor_data = None
+    #
     def update_central(self, central):
         """update central"""
         if self._plot_canvas is not None:

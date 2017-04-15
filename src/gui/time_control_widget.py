@@ -50,11 +50,11 @@ class TimeControlWidget(BaseWidget):
 
     def set_enable(self, value):
         """Set enable or not"""
-        if self._check_consistency:
+        if self._check_consistency():
             self.setEnabled(value)
+            self.reset()
         else:
             self.setEnabled(False)
-        self.reset()
 
     def reset(self):
         """Reset controls"""
@@ -71,7 +71,9 @@ class TimeControlWidget(BaseWidget):
 
     def _check_consistency(self):
         """Check control values consistency"""
-        if self._start_time <= self._end_time:
+        if (self._start_time is None) or  (self._end_time is None):
+            return False
+        if self._start_time >= self._end_time:
             return False
         return True
 
