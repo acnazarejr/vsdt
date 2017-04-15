@@ -36,6 +36,7 @@ class SensorDataManagerMDIWidget(BaseMDIWidget):
         self._time_control_widget = TimeControlWidget()
         self.gui.dataVisualizationGroupVerticalLayout.addWidget(self._sensor_data_view_widget)
         self.gui.dataVisualizationGroupVerticalLayout.addWidget(self._time_control_widget)
+        self._time_control_widget.time_updated.connect(self._time_updated)
 
         self.gui.dataIDField.setText(self._sensor_data.data_id)
         self.gui.dataIDField.textChanged.connect(self._data_id_field_changed)
@@ -71,6 +72,11 @@ class SensorDataManagerMDIWidget(BaseMDIWidget):
     def get_icon():
         """get icon"""
         return QtGui.QIcon(':/icons/sensor_manager.png')
+
+    def _time_updated(self, time):
+        """control current updated slot"""
+        self._sensor_data_view_widget.update_central(time)
+
 
     def _sensor_selection_changed(self):
         selected_itens = self.gui.sensorDataTree.selectedItems()

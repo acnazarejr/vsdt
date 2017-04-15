@@ -2,10 +2,12 @@
 
 import numpy as np
 import random
+import datetime
 from PyQt5 import QtWidgets
 import matplotlib
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+import matplotlib.dates as md
 
  # Make sure that we are using QT5
 matplotlib.use('Qt5Agg')
@@ -16,11 +18,11 @@ class PlotCanvas(FigureCanvas):
     def __init__(self, sensor_data):
         """Init method"""
 
+        self._sensor_data = sensor_data
 
-        self._timestamps = np.arange(0, 10000, 0.2)
-        self._x_values = [random.randint(0, 10) for i in range(len(self._timestamps))]
-        self._y_values = [random.randint(0, 10) for i in range(len(self._timestamps))]
-        self._z_values = [random.randint(0, 10) for i in range(len(self._timestamps))]
+        self._timestamps = [item['timestamp'] for item in sensor_data]
+        self._timestamps = md.date2num(self._timestamps)
+        self._x_values = [item['values']['x'] for item in sensor_data]
 
         # self._sensor_data = sensor_data
 
@@ -37,12 +39,16 @@ class PlotCanvas(FigureCanvas):
         FigureCanvas.updateGeometry(self)
         #pylint: enable=E1101
 
-        self.update_central(1000)
+        # self.update_central(sensor_data[100]['timestamp'])
 
     def update_central(self, central):
         """Update figure"""
         self._axes.cla()
-        self._axes.set_xlim(central-200, central+200)
-        self._axes.axvline(x=central, color='red')
+        xfmt = md.DateFormatter('%H:%M:%S.%f')
+        self._axes.xaxis.set_major_formatter(xfmt)
+        lim_inf = central - datetime.timedelta(milliseconds=5000)
+        lim_sup = central + datetime.timedelta(milliseconds=5000)
+        self._axes.set_xlim(md.date2num(lim_inf), md.date2num(lim_sup))
+        self._axes.axvline(x=md.date2num(central), color='red')
         self._axes.plot(self._timestamps, self._x_values)
         self.draw()

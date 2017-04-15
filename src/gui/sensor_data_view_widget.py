@@ -20,7 +20,8 @@ class SensorDataViewWidget(BaseWidget):
 
     def set_sensor_data(self, sensor_data):
         """set sensor data"""
-        self.clear()
+        if self._plot_canvas is not None:
+            self.clear()
         self._sensor_data = sensor_data
         self._plot_canvas = PlotCanvas(self._sensor_data)
         self.gui.viewGroupVerticalLayout.addWidget(self._plot_canvas)
@@ -30,3 +31,8 @@ class SensorDataViewWidget(BaseWidget):
         self._plot_canvas.close()
         self._plot_canvas = None
         self._sensor_data = None
+
+    def update_central(self, central):
+        """update central"""
+        if self._plot_canvas is not None:
+            self._plot_canvas.update_central(central)
