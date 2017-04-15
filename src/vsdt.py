@@ -8,10 +8,10 @@ import sys
 from PyQt5 import QtWidgets
 
 from gui.ui import MainWindowUiBase, MainWindowUi
-from gui import VisualDataManagerMDIWidget
+from gui import VisualDataManagerMDIWidget, SensorDataManagerMDIWidget
 from gui import MDISubWindow
 from gui import utils
-from models import VisualData
+from models import VisualData, SensorData
 
 
 class VSDT(MainWindowUiBase):
@@ -53,6 +53,8 @@ class VSDT(MainWindowUiBase):
         """Connect menu bar actions"""
         self.gui.newVisualDataAction.triggered.connect(self._new_visual_data_action)
         self.gui.openVisualDataAction.triggered.connect(self._open_visual_data_action)
+        self.gui.newSensorDataAction.triggered.connect(self._new_sensor_data_action)
+        self.gui.openSensorDataAction.triggered.connect(self._open_sensor_data_action)
 
 
     def _new_visual_data_action(self):
@@ -75,74 +77,32 @@ class VSDT(MainWindowUiBase):
                 visual_data, working_dir=working_dir, has_changes=False)
             self._open_sub_window(visual_data_manager_mdi_widget)
 
+    def _new_sensor_data_action(self):
+        """New visual data action"""
+        sensor_data = SensorData()
+        sensor_data.data_id = 'new_sensor_data'
+        settings = utils.get_settings()
+        working_dir = settings.value('last_dir', type=str)
+        sensor_data_manager_mdi_widget = SensorDataManagerMDIWidget(
+            sensor_data, working_dir=working_dir, has_changes=True)
+        self._open_sub_window(sensor_data_manager_mdi_widget)
+
+    def _open_sensor_data_action(self):
+        """New visual data action"""
+        sensor_data_file = utils.get_open_file(self, 'Open Sensor Data', 'JSON File (*.json)')
+        if sensor_data_file is not None:
+            working_dir = os.path.dirname(sensor_data_file)
+            sensor_data = SensorData(sensor_data_file)
+            sensor_data_manager_mdi_widget = SensorDataManagerMDIWidget(
+                sensor_data, working_dir=working_dir, has_changes=False)
+            self._open_sub_window(sensor_data_manager_mdi_widget)
+
     def _open_sub_window(self, widget):
         """Open a new MDI SubWindow"""
         sub = MDISubWindow()
         sub.setWidget(widget)
         self.gui.mdiArea.addSubWindow(sub)
         sub.show()
-
-    # def _create_visual_data_form(self):
-    #     """create visual data form"""
-    #     form = VisualDataForm()
-    #     return form
-    #
-    # def _create_sensor_data_form(self):
-    #     """create visual data form"""
-    #     form = SensorDataForm()
-    #     form.set_sensor_data(SensorData(""))
-    #     return form
-    #
-    # def _create_control_form(self):
-    #     """create control form"""
-    #     form = ControlForm()
-    #     return form
-    #
-    # def _operation_mode_clicked(self):
-    #     """ """
-    #     self.gui.openVideoButton.setEnabled(False)
-    #     self.gui.openSensorButton.setEnabled(False)
-    #
-    #     mode = self._checked_operation_mode()
-    #     if mode == 'visualSensorRadioButton':
-    #         self.gui.openVideoButton.setEnabled(True)
-    #         self.gui.openSensorButton.setEnabled(False)
-    #     elif mode == 'visualRadioButton':
-    #         self.gui.openVideoButton.setEnabled(True)
-    #     elif mode == 'sensorRadioButton':
-    #         self.gui.openSensorButton.setEnabled(False)
-    #
-    # def _checked_operation_mode(self):
-    #     """returns the operation mode checked"""
-    #     radios = [self.gui.visualSensorRadioButton,
-    #               self.gui.visualRadioButton,
-    #               self.gui.sensorRadioButton]
-    #
-    #     for radio in radios:
-    #         if radio.isChecked():
-    #             return radio.objectName()
-    #
-    # def _open_video_button_clicked(self):
-    #     """Open video button clicked signal"""
-    #     #pylint: disable=E1101
-    #     video_file = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', 'd:\\',
-    #                                                        "Video files (*.mp4 *.avi)")
-    #     visual_data = VisualData(video_file[0])
-    #     self._control_form.set_visual_data(visual_data)
-    #     #pylint: enable=E1101
-    #
-    # def _visual_data_updated(self, frame):
-    #     """control current updated slot"""
-    #     # print(current_value)
-    #     self._visual_data_form.update_frame(frame)
-    #
-    # def _sensor_data_updated(self, central):
-    #     """control current updated slot"""
-    #     # print(current_value)
-    #     self._sensor_data_form.update_central(central)
-
-
-
 
 def run():
     """ Start the GUI."""

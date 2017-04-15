@@ -11,7 +11,6 @@ class TemporalData(Data, ABC):
     def __init__(self):
         """Init method"""
         Data.__init__(self)
-        self._id = None
         self._interval = None
         self._start_time = None
         self._end_time = None

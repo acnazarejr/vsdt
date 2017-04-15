@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>visualDataManagerWidget</class>
+ <widget class="QWidget" name="visualDataManagerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>807</width>
-    <height>631</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,78 +21,23 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="dataIDField"/>
+        </item>
+        <item row="1" column="0">
          <widget class="QLabel" name="dataIDLabel">
           <property name="text">
            <string>DataID</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QLineEdit" name="dataIDField"/>
-        </item>
        </layout>
       </item>
-      <item>
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="openVideoLayout">
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="saveButton">
-          <property name="text">
-           <string>Save</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../res/vsdt.qrc">
-            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
-          </property>
-          <property name="shortcut">
-           <string>Enter</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="framesViewGroupBox">
-     <property name="title">
-      <string>Frames View</string>
-     </property>
-     <layout class="QVBoxLayout" name="framesViewGroupVerticalLayout"/>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Synchronization</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <layout class="QHBoxLayout" name="syncLayout">
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="syncHorizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -147,8 +92,53 @@
        </layout>
       </item>
      </layout>
-     <zorder></zorder>
     </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="dataVisualizationGroupBox">
+     <property name="title">
+      <string>Data Visualization</string>
+     </property>
+     <layout class="QVBoxLayout" name="dataVisualizationGroupVerticalLayout"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="horizontalLine">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="saveHorizontalLayout">
+     <item>
+      <spacer name="saveHorizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="saveButton">
+       <property name="text">
+        <string>Save</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/vsdt.qrc">
+         <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Enter</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

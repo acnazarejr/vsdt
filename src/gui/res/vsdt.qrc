@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="icons">
+    <file>sensor.png</file>
+    <file>smartphone.png</file>
+    <file>smartwatch.png</file>
+    <file>regex.png</file>
+    <file>trash.png</file>
     <file>add_video.png</file>
     <file>save.png</file>
     <file>add_file.png</file>
@@ -9,8 +14,8 @@
     <file>import.png</file>
     <file>sinchronize.png</file>
     <file>goto.png</file>
-    <file>frame_timestamp.png</file>
     <file>sensor_manager.png</file>
+    <file>visual_manager.png</file>
     <file>open.png</file>
     <file>next.png</file>
     <file>pause.png</file>

@@ -111,28 +111,28 @@ class VisualData(TemporalData):
         self._end_time = self._timestamps[self._frames_count - 1]
 
     def save(self, json_file=None):
-        """generate json timestamps"""
+        """save method"""
         if json_file is not None:
             self._json_file = json_file
         if self._json_file is None:
             raise FileNotFoundError('This visual data is new and does not have a json file')
 
-        json_dict = self.generate_json_dict()
+        json_dict = self.to_dict()
         with open(self._json_file, 'w') as json_file:
-            json.dump(json_dict, json_file, default=utils.datetime_handler)
+            json.dump(json_dict, json_file, default=utils.handler)
 
-    def generate_json_dict(self):
+    def to_dict(self):
         """generate json timestamps"""
-        json_dict = {}
-        json_dict['timestamps'] = self._timestamps
-        json_dict['data_id'] = self._data_id
-        json_dict['fps'] = self._fps
-        json_dict['frames_count'] = self._frames_count
-        json_dict['interval'] = self._interval
-        json_dict['start_time'] = self._start_time
-        json_dict['end_time'] = self._end_time
-        json_dict['video_file'] = self._video_file
-        return json_dict
+        ret_dict = {}
+        ret_dict['timestamps'] = self._timestamps
+        ret_dict['data_id'] = self._data_id
+        ret_dict['fps'] = self._fps
+        ret_dict['frames_count'] = self._frames_count
+        ret_dict['interval'] = self._interval
+        ret_dict['start_time'] = self._start_time
+        ret_dict['end_time'] = self._end_time
+        ret_dict['video_file'] = self._video_file
+        return ret_dict
 
     @staticmethod
     def create_from_video(video_file):

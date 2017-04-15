@@ -63,8 +63,16 @@
     <addaction name="newVisualDataAction"/>
     <addaction name="openVisualDataAction"/>
    </widget>
+   <widget class="QMenu" name="menuSensor_Data">
+    <property name="title">
+     <string>Sensor Data</string>
+    </property>
+    <addaction name="newSensorDataAction"/>
+    <addaction name="openSensorDataAction"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuVisual_Data"/>
+   <addaction name="menuSensor_Data"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -91,7 +99,7 @@
     <string>New Visual Data</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+V</string>
+    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="openVisualDataAction">
@@ -99,7 +107,23 @@
     <string>Open Visual Data</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+Shift+V</string>
+    <string>Ctrl+Shift+V</string>
+   </property>
+  </action>
+  <action name="newSensorDataAction">
+   <property name="text">
+    <string>New Sensor Data</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="openSensorDataAction">
+   <property name="text">
+    <string>Open Sensor Data</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>

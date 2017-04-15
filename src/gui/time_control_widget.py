@@ -12,12 +12,6 @@ from gui.base_widget import BaseWidget
 
 from control import utils
 
-class ControlMode(Enum):
-    """Control Mode enum"""
-    FRAME = 1
-    TIME = 2
-    FRAME_TIME = 3
-
 class TimeControlWidget(BaseWidget):
     """Control Widget class"""
 
@@ -33,7 +27,6 @@ class TimeControlWidget(BaseWidget):
         self._interval = None
         self._current_time = None
         self._on_play = False
-        self._operation_mode = ControlMode.FRAME_TIME
 
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._on_play_run)
@@ -47,7 +40,6 @@ class TimeControlWidget(BaseWidget):
 
         self.setDisabled(True)
         self._refresh_info()
-
 
     def set_control_values(self, start_time=None, end_time=None, interval=None):
         """Set control values"""

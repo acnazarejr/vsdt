@@ -22,6 +22,18 @@ def get_open_file(parent, title, file_filter, suggestion=None):
         settings.setValue('last_dir', open_dir)
     return opened_file
 
+def get_open_files(parent, title, file_filter, suggestion=None):
+    """Open a file and stores the last dir open"""
+    settings = get_settings()
+    last_dir = settings.value('last_dir', type=str)
+    if suggestion is None:
+        suggestion = last_dir
+    files = QtWidgets.QFileDialog.getOpenFileNames(parent, title, last_dir, file_filter)[0]
+    if files:
+        open_dir = os.path.dirname(files[0])
+        settings.setValue('last_dir', open_dir)
+    return files
+
 def get_save_file(parent, title, file_filter, suggestion=None):
     """Open a file and stores the last dir open"""
     settings = get_settings()

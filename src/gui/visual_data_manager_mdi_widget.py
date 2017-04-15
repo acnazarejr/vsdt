@@ -27,8 +27,8 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
 
         self._visual_data_view_widget = VisualDataViewWidget()
         self._time_control_widget = TimeControlWidget()
-        self.gui.framesViewGroupVerticalLayout.addWidget(self._visual_data_view_widget)
-        self.gui.framesViewGroupVerticalLayout.addWidget(self._time_control_widget)
+        self.gui.dataVisualizationGroupVerticalLayout.addWidget(self._visual_data_view_widget)
+        self.gui.dataVisualizationGroupVerticalLayout.addWidget(self._time_control_widget)
 
         self.gui.dataIDField.setText(self._visual_data.data_id)
         self.gui.dataIDField.textChanged.connect(self._data_id_field_changed)
@@ -46,8 +46,6 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
         validator = QtGui.QRegExpValidator(QtCore.QRegExp(reg))
         self.gui.currentTimestampField.setValidator(validator)
 
-        self._sync_options_enable(self._visual_data.has_video())
-
     def get_title(self):
         """Get window name"""
         title = self._visual_data.data_id
@@ -56,7 +54,7 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
     @staticmethod
     def get_icon():
         """get icon"""
-        return QtGui.QIcon(':/icons/sensor_manager.png')
+        return QtGui.QIcon(':/icons/visual_manager.png')
 
     def _data_id_field_changed(self, new_data_id):
         self._has_changes = True
@@ -84,13 +82,6 @@ class VisualDataManagerMDIWidget(BaseMDIWidget):
         frame, timestamp = self._visual_data.get_frame(time)
         self.gui.currentTimestampField.setText(timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f"))
         self._visual_data_view_widget.update_frame(frame)
-
-    def _sync_options_enable(self, value):
-        """enable or disabel sync options"""
-        self.gui.currentTimestampField.setEnabled(value)
-        self.gui.currentTimestampLabel.setEnabled(value)
-        self.gui.saveButton.setEnabled(value)
-        self.gui.syncButton.setEnabled(value)
 
     def _save(self):
         if self._visual_data.json_file is not None:

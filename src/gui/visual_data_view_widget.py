@@ -32,7 +32,3 @@ class VisualDataViewWidget(BaseWidget):
         bpl = bpc * width
         image = QtGui.QImage(frame.data, width, height, bpl, QtGui.QImage.Format_RGB888)
         self.gui.videoViewWidget.update_frame(image)
-
-    def closeEvent(self, _):
-        """Close event method"""
-        self.video_control.pause()

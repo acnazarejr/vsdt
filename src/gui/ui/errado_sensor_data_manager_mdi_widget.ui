@@ -27,51 +27,6 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <layout class="QVBoxLayout" name="controlVerticalLayout">
-        <item>
-         <widget class="QTreeWidget" name="sensorDataTree">
-          <property name="headerHidden">
-           <bool>false</bool>
-          </property>
-          <property name="columnCount">
-           <number>1</number>
-          </property>
-          <column>
-           <property name="text">
-            <string>Sensor Data</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QPushButton" name="addButton">
-            <property name="text">
-             <string>Add from file</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../res/vsdt.qrc">
-              <normaloff>:/icons/add_file.png</normaloff>:/icons/add_file.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="settingsButton">
-            <property name="text">
-             <string>Settings</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../res/vsdt.qrc">
-              <normaloff>:/icons/settings.png</normaloff>:/icons/settings.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
       <widget class="QGroupBox" name="viewGroupBox">
        <property name="title">
         <string>Sensor Data</string>

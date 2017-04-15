@@ -4,6 +4,7 @@
 
 import datetime
 import dateutil.parser
+from models.sensor_data import SensorType
 
 def milliseconds_to_timestamp(milliseconds):
     """method for milliseconds to timestamp converting"""
@@ -21,8 +22,11 @@ def time_delta_in_milliseconds(date_a, date_b):
     diff = (date_a - date_b)
     return diff.total_seconds() * 1000
 
-def datetime_handler(timestamp):
+def handler(value):
     """handle for timestamps"""
-    if isinstance(timestamp, datetime.datetime):
-        return timestamp.isoformat()
+    if isinstance(value, datetime.datetime):
+        return value.isoformat()
+    if isinstance(value, SensorType):
+        print(value)
+        return value.name
     raise TypeError("Unknown type")
