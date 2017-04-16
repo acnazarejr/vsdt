@@ -1,4 +1,4 @@
-"""Main Window class"""
+"""VisualManagerMDI class file."""
 
 import os
 import dateutil.parser
@@ -15,16 +15,14 @@ from gui.gui_utils import get_save_file, save_message_box
 #pylint: enable=E0401
 #pylint: enable=E0611
 
-# from gui import utils
-
 class VisualManagerMDI(BaseMDI):
-    """Main Window class"""
+    """VisualManagerMDI class."""
 
     ###############################################################################################
     # Init Method
     ###############################################################################################
     def __init__(self, visual_data, working_dir=None, has_changes=False, parent=None):
-        """Init method"""
+        """Init method."""
         BaseMDI.__init__(self, parent, VisualManagerMDIUi)
 
         self._visual_data = visual_data
@@ -55,6 +53,10 @@ class VisualManagerMDI(BaseMDI):
     def get_icon():
         """Get window icon."""
         return QIcon(':/icons/visual_manager.png')
+
+    def set_json_file(self, json_file):
+        """Set json file."""
+        self._json_file = json_file
 
     ###############################################################################################
     # Private Methods

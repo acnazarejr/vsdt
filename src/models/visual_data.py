@@ -22,7 +22,6 @@ class VisualData(TemporalData):
     ###############################################################################################
     # Init
     ###############################################################################################
-
     def __init__(self, json_file=None):
         """Init method."""
         TemporalData.__init__(self)
@@ -33,7 +32,7 @@ class VisualData(TemporalData):
         self._interval = None
         self._start_time = None
         self._end_time = None
-        self._video_file_basename = None
+        self._video_file_name = None
         self._video_file_path = None
         self._video_capture = None
         self._timestamps = None
@@ -41,13 +40,7 @@ class VisualData(TemporalData):
         if json_file is not None:
             with open(json_file) as json_file_reader:
                 json_dict = json.load(json_file_reader)
-                self._data_id = json_dict['data_id']
-                self._interval = json_dict['interval']
-                self._start_time = dateutil.parser.parse(json_dict['start_time'])
-                self._end_time = dateutil.parser.parse(json_dict['end_time'])
-                self._fps = json_dict['fps']
-                self._frames_count = json_dict['frames_count']
-                self._video_file_name = json_dict['video_file_name']
+                self.from_dict(json_dict)
                 self._video_file_path = os.path.join(os.path.dirname(json_file),
                                                      self._video_file_name)
                 if not os.path.isfile(self._video_file_path):
@@ -59,8 +52,6 @@ class VisualData(TemporalData):
                 if not capture.isOpened():
                     raise AssertionError('Invalid video format: {}'.format(self._video_file_path))
                 self._video_capture = capture
-                self._timestamps = [dateutil.parser.parse(timestamp)
-                                    for timestamp in json_dict['timestamps']]
 
     ###############################################################################################
     # Public Methods
@@ -157,7 +148,7 @@ class VisualData(TemporalData):
 
 
     def to_dict(self):
-        """generate json timestamps"""
+        """export data to dict"""
         if not self.has_video():
             raise RuntimeError('This visual data has no video')
 
@@ -171,6 +162,18 @@ class VisualData(TemporalData):
         ret_dict['end_time'] = self._end_time
         ret_dict['video_file_name'] = self._video_file_name
         return ret_dict
+
+    def from_dict(self, import_dict):
+        """import data from dict"""
+        self._data_id = import_dict['data_id']
+        self._start_time = dateutil.parser.parse(import_dict['start_time'])
+        self._end_time = dateutil.parser.parse(import_dict['end_time'])
+        self._interval = import_dict['interval']
+        self._fps = import_dict['fps']
+        self._frames_count = import_dict['frames_count']
+        self._video_file_name = import_dict['video_file_name']
+        self._timestamps = [dateutil.parser.parse(timestamp)
+                            for timestamp in import_dict['timestamps']]
 
     ###############################################################################################
     # Static methods
@@ -191,28 +194,27 @@ class VisualData(TemporalData):
     ###############################################################################################
     @property
     def current_frame(self):
-        """fps property"""
+        """int: Current frame property."""
         #pylint: disable=E1101
         return int(self._video_capture.get(cv2.CAP_PROP_POS_FRAMES) - 1)
         #pylint: enable=E1101
 
     @property
     def fps(self):
-        """fps property"""
+        """float: Fps property."""
         return self._fps
 
     @property
     def frames_count(self):
-        """frames count property"""
-
+        """int: Returns the number of frames"""
         return self._frames_count
 
     @property
     def video_file_name(self):
-        """video file property"""
+        """str: Video file property"""
         return self._video_file_name
 
     @property
     def video_file_path(self):
-        """video file property"""
+        """str: Video file path property"""
         return self._video_file_path

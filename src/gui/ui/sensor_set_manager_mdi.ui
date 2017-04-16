@@ -39,6 +39,9 @@
                <height>150</height>
               </size>
              </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::ExtendedSelection</enum>
+             </property>
              <property name="indentation">
               <number>20</number>
              </property>
@@ -130,6 +133,11 @@
             <widget class="QComboBox" name="deviceTypeList">
              <item>
               <property name="text">
+               <string>unknown</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>smartphone</string>
               </property>
              </item>
@@ -152,7 +160,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QGroupBox" name="dataVisualizationGroupBox">
+     <widget class="QGroupBox" name="dataVisualizationGroup">
       <property name="title">
        <string>Data Visualization</string>
       </property>

@@ -62,4 +62,4 @@ class TemporalData(Data, ABC):
         """float: data length in milliseconds."""
         if (self._start_time is None) or (self._end_time is None):
             return None
-        return time_delta_in_milliseconds(self._start_time, self._end_time)
+        return time_delta_in_milliseconds(self._end_time, self._start_time)

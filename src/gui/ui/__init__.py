@@ -11,15 +11,15 @@ MainWindowUi, MainWindowUiBase = uic.loadUiType(os.path.join(DIR, 'vsdt_main_win
 
 VisualManagerMDIUi, VisualManagerMDIUiBase = uic.loadUiType(
     os.path.join(DIR, 'visual_manager_mdi.ui'))
-#
-# SensorDataManagerMDIWidgetUi, SensorDataManagerMDIWidgetUiBase = uic.loadUiType(
-#     os.path.join(DIR, 'sensor_data_manager_mdi_widget.ui'))
-#
+
+SensorSetManagerMDIUi, SensorSetManagerMDIUiBase = uic.loadUiType(
+    os.path.join(DIR, 'sensor_set_manager_mdi.ui'))
+
 VisualDataViewWidgetUi, VisualDataViewWidgetUiBase = uic.loadUiType(
     os.path.join(DIR, 'visual_data_view_widget.ui'))
-#
-# SensorDataViewWidgetUi, SensorDataViewWidgetUiBase = uic.loadUiType(
-#     os.path.join(DIR, 'sensor_data_view_widget.ui'))
-#
+
+SensorDataViewWidgetUi, SensorDataViewWidgetUiBase = uic.loadUiType(
+    os.path.join(DIR, 'sensor_data_view_widget.ui'))
+
 TimeControlWidgetUi, TimeControlWidgetUiBase = uic.loadUiType(
     os.path.join(DIR, 'time_control_widget.ui'))
