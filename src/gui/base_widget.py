@@ -1,25 +1,18 @@
-#pylint: disable=E1101
-"""Base form class file"""
+"""Base widget class file."""
 
 from abc import abstractmethod
-from PyQt5 import QtWidgets
+#pylint: disable=E0611
+from PyQt5.QtWidgets import QWidget
+#pylint: enable=E0611
 
-class BaseWidget(QtWidgets.QWidget):
-    """Base Form class"""
+#pylint: disable=R0903
+class BaseWidget(QWidget):
+    """BaseWidget class."""
 
     @abstractmethod
     def __init__(self, parent, decorator):
         """init method"""
-        QtWidgets.QWidget.__init__(self, parent)
+        QWidget.__init__(self, parent)
         self.gui = decorator()
         self.gui.setupUi(self)
-
-    @abstractmethod
-    def update(self):
-        """Abstract update method"""
-        pass
-
-    @abstractmethod
-    def clean(self):
-        """Abstract clean method"""
-        pass
+        #pylint: enable=E1101

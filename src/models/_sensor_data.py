@@ -100,7 +100,7 @@ class SensorData(TemporalData):
         for data in self._sensors[sensor_type]:
             timestamp = data['timestamp']
             values = tuple(data['values'].values())
-            ret_list.append((timestamp, ) + values)        
+            ret_list.append((timestamp, ) + values)
         return ret_list
 
     def has_sensor(self, sensor_type):

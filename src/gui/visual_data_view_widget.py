@@ -1,34 +1,37 @@
-#pylint: disable=C0103
-#pylint: disable=E1101
-#pylint: disable=E0611
-#pylint: disable=E0401
-"""Main Window class"""
+"""VisualData class file."""
 
 import cv2
-from PyQt5 import QtGui
+#pylint: disable=E0611
+#pylint: disable=E0401
+from PyQt5.QtGui import QImage
+from PyQt5.QtWidgets import QVBoxLayout
 from gui.ui import VisualDataViewWidgetUi
 from gui.base_widget import BaseWidget
 from gui.frame_view_widget import FrameViewWidget
+#pylint: enable=E0401
+#pylint: enable=E0611
 
+#pylint: disable=R0903
 class VisualDataViewWidget(BaseWidget):
-    """Main Window class"""
+    """VisualData class."""
 
     def __init__(self, parent=None):
-        """Init method"""
+        """Init method."""
         BaseWidget.__init__(self, parent, VisualDataViewWidgetUi)
 
-        self.gui.videoViewWidget = FrameViewWidget(self.gui.viewGroupBox)
-        self.gui.videoViewWidget.setObjectName("videoViewWidget")
-        self.gui.viewGroupVerticalLayout.addWidget(self.gui.videoViewWidget)
+        self._frame_view_widget = FrameViewWidget(self)
+        layout = QVBoxLayout(self.gui.viewGroup)
+        layout.addWidget(self._frame_view_widget)
+        self.gui.viewGroup.setLayout(layout)
 
     def update_frame(self, frame):
-        """temp method"""
-
+        """Update frame method."""
         if frame is None:
-            print('None')
             return
+        #pylint: disable=E1101
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        #pylint: enable=E1101
         height, width, bpc = frame.shape
         bpl = bpc * width
-        image = QtGui.QImage(frame.data, width, height, bpl, QtGui.QImage.Format_RGB888)
-        self.gui.videoViewWidget.update_frame(image)
+        image = QImage(frame.data, width, height, bpl, QImage.Format_RGB888)
+        self._frame_view_widget.update_frame(image)

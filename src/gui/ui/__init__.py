@@ -7,19 +7,19 @@ from PyQt5 import uic
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
-MainWindowUi, MainWindowUiBase = uic.loadUiType(os.path.join(DIR, 'main_window.ui'))
+MainWindowUi, MainWindowUiBase = uic.loadUiType(os.path.join(DIR, 'vsdt_main_window.ui'))
 
-VisualDataManagerMDIWidgetUi, VisualDataManagerMDIWidgetUiBase = uic.loadUiType(
-    os.path.join(DIR, 'visual_data_manager_mdi_widget.ui'))
-
-SensorDataManagerMDIWidgetUi, SensorDataManagerMDIWidgetUiBase = uic.loadUiType(
-    os.path.join(DIR, 'sensor_data_manager_mdi_widget.ui'))
-
+VisualManagerMDIUi, VisualManagerMDIUiBase = uic.loadUiType(
+    os.path.join(DIR, 'visual_manager_mdi.ui'))
+#
+# SensorDataManagerMDIWidgetUi, SensorDataManagerMDIWidgetUiBase = uic.loadUiType(
+#     os.path.join(DIR, 'sensor_data_manager_mdi_widget.ui'))
+#
 VisualDataViewWidgetUi, VisualDataViewWidgetUiBase = uic.loadUiType(
     os.path.join(DIR, 'visual_data_view_widget.ui'))
-
-SensorDataViewWidgetUi, SensorDataViewWidgetUiBase = uic.loadUiType(
-    os.path.join(DIR, 'sensor_data_view_widget.ui'))
-
+#
+# SensorDataViewWidgetUi, SensorDataViewWidgetUiBase = uic.loadUiType(
+#     os.path.join(DIR, 'sensor_data_view_widget.ui'))
+#
 TimeControlWidgetUi, TimeControlWidgetUiBase = uic.loadUiType(
     os.path.join(DIR, 'time_control_widget.ui'))

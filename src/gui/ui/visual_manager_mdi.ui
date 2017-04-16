@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>visualDataManagerWidget</class>
- <widget class="QWidget" name="visualDataManagerWidget">
+ <class>visualManagerMDI</class>
+ <widget class="QWidget" name="visualManagerMDI">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>VisualData Manager</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="optionsGroupBox">
+    <widget class="QGroupBox" name="optionsGroup">
      <property name="title">
       <string>Options</string>
      </property>
@@ -95,11 +95,10 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="dataVisualizationGroupBox">
+    <widget class="QGroupBox" name="dataVisualizationGroup">
      <property name="title">
       <string>Data Visualization</string>
      </property>
-     <layout class="QVBoxLayout" name="dataVisualizationGroupVerticalLayout"/>
     </widget>
    </item>
    <item>

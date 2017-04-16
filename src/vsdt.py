@@ -1,21 +1,17 @@
 #pylint: disable=R0201
-#pylint: disable=R0903
-"""Main app file"""
+"""VSDT main app file."""
 
 import os
 import sys
-
 from PyQt5 import QtWidgets
-
+from models import VisualData
 from gui.ui import MainWindowUiBase, MainWindowUi
-from gui import VisualDataManagerMDIWidget, SensorDataManagerMDIWidget
-from gui import MDISubWindow
-from gui import utils
-from models import VisualData, SensorData
-
+from gui.visual_manager_mdi import VisualManagerMDI
+from gui.mdi_sub_window import MDISubWindow
+from gui.gui_utils import get_open_file
 
 class VSDT(MainWindowUiBase):
-    """Biobox main class"""
+    """VSDT Main class."""
 
     def __init__(self):
         #pylint: disable=E1101
@@ -24,10 +20,7 @@ class VSDT(MainWindowUiBase):
         self.gui = MainWindowUi()
         self.gui.setupUi(self)
 
-        # self._visual_data_manager_window = VisualDataManagerWindow()
-        # self._sensor_data_manager_window = SensorDataManagerWindow()
-
-        self._connect_actions()
+        self._make_connections()
 
 
         # #self._video_control = VideoControl(Raspicam(640, 480, 15))
@@ -49,54 +42,53 @@ class VSDT(MainWindowUiBase):
         # self._control_form.visual_data_updated.connect(self._visual_data_updated)
         # self._control_form.sensor_data_updated.connect(self._sensor_data_updated)
 
-    def _connect_actions(self):
+    def _make_connections(self):
         """Connect menu bar actions"""
         self.gui.newVisualDataAction.triggered.connect(self._new_visual_data_action)
         self.gui.openVisualDataAction.triggered.connect(self._open_visual_data_action)
-        self.gui.newSensorDataAction.triggered.connect(self._new_sensor_data_action)
-        self.gui.openSensorDataAction.triggered.connect(self._open_sensor_data_action)
-
+        # self.gui.newSensorDataAction.triggered.connect(self._new_sensor_data_action)
+        # self.gui.openSensorDataAction.triggered.connect(self._open_sensor_data_action)
 
     def _new_visual_data_action(self):
         """New visual data action"""
-        video_file = utils.get_open_file(self, 'Open Video File', 'Video files (*.mp4 *.avi)')
+        video_file = get_open_file(self, 'Open Video File', 'Video files (*.mp4 *.avi)')
         if video_file is not None:
             working_dir = os.path.dirname(video_file)
             visual_data = VisualData.create_from_video(video_file)
-            visual_data_manager_mdi_widget = VisualDataManagerMDIWidget(
+            visual_data_manager_mdi_widget = VisualManagerMDI(
                 visual_data, working_dir=working_dir, has_changes=True)
             self._open_sub_window(visual_data_manager_mdi_widget)
 
     def _open_visual_data_action(self):
         """New visual data action"""
-        visual_data_file = utils.get_open_file(self, 'Open Visual Data', 'JSON File (*.json)')
+        visual_data_file = get_open_file(self, 'Open Visual Data', 'JSON File (*.json)')
         if visual_data_file is not None:
             working_dir = os.path.dirname(visual_data_file)
             visual_data = VisualData(visual_data_file)
-            visual_data_manager_mdi_widget = VisualDataManagerMDIWidget(
+            visual_data_manager_mdi_widget = VisualManagerMDI(
                 visual_data, working_dir=working_dir, has_changes=False)
             self._open_sub_window(visual_data_manager_mdi_widget)
 
-    def _new_sensor_data_action(self):
-        """New visual data action"""
-        sensor_data = SensorData()
-        sensor_data.data_id = 'new_sensor_data'
-        settings = utils.get_settings()
-        working_dir = settings.value('last_dir', type=str)
-        sensor_data_manager_mdi_widget = SensorDataManagerMDIWidget(
-            sensor_data, working_dir=working_dir, has_changes=True)
-        self._open_sub_window(sensor_data_manager_mdi_widget)
-
-    def _open_sensor_data_action(self):
-        """New visual data action"""
-        sensor_data_file = utils.get_open_file(self, 'Open Sensor Data', 'JSON File (*.json)')
-        if sensor_data_file is not None:
-            working_dir = os.path.dirname(sensor_data_file)
-            sensor_data = SensorData(sensor_data_file)
-            sensor_data_manager_mdi_widget = SensorDataManagerMDIWidget(
-                sensor_data, working_dir=working_dir, has_changes=False)
-            self._open_sub_window(sensor_data_manager_mdi_widget)
-
+#     def _new_sensor_data_action(self):
+#         """New visual data action"""
+#         sensor_data = SensorData()
+#         sensor_data.data_id = 'new_sensor_data'
+#         settings = utils.get_settings()
+#         working_dir = settings.value('last_dir', type=str)
+#         sensor_data_manager_mdi_widget = SensorDataManagerMDIWidget(
+#             sensor_data, working_dir=working_dir, has_changes=True)
+#         self._open_sub_window(sensor_data_manager_mdi_widget)
+#
+#     def _open_sensor_data_action(self):
+#         """New visual data action"""
+#         sensor_data_file = utils.get_open_file(self, 'Open Sensor Data', 'JSON File (*.json)')
+#         if sensor_data_file is not None:
+#             working_dir = os.path.dirname(sensor_data_file)
+#             sensor_data = SensorData(sensor_data_file)
+#             sensor_data_manager_mdi_widget = SensorDataManagerMDIWidget(
+#                 sensor_data, working_dir=working_dir, has_changes=False)
+#             self._open_sub_window(sensor_data_manager_mdi_widget)
+#
     def _open_sub_window(self, widget):
         """Open a new MDI SubWindow"""
         sub = MDISubWindow()

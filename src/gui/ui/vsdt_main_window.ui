@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>919</width>
-    <height>601</height>
+    <height>602</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,6 +37,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -46,39 +47,32 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
      <string>About</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuVisual_Data">
+   <widget class="QMenu" name="menuVisualData">
     <property name="title">
      <string>Visual Data</string>
     </property>
     <addaction name="newVisualDataAction"/>
     <addaction name="openVisualDataAction"/>
    </widget>
-   <widget class="QMenu" name="menuSensor_Data">
+   <widget class="QMenu" name="menuSensorData">
     <property name="title">
      <string>Sensor Data</string>
     </property>
     <addaction name="newSensorDataAction"/>
     <addaction name="openSensorDataAction"/>
    </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuVisual_Data"/>
-   <addaction name="menuSensor_Data"/>
+   <addaction name="menuVisualData"/>
+   <addaction name="menuSensorData"/>
    <addaction name="menuAbout"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionVisualDataManager">
    <property name="icon">
-    <iconset resource="../res/vsdt.qrc">
+    <iconset>
      <normaloff>:/icons/frame_timestamp.png</normaloff>:/icons/frame_timestamp.png</iconset>
    </property>
    <property name="text">
@@ -124,6 +118,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>
