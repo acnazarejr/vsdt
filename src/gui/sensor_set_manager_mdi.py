@@ -12,6 +12,7 @@ from gui.ui import SensorSetManagerMDIUi
 from gui.sensor_data_view_widget import SensorDataViewWidget
 from gui.time_control_widget import TimeControlWidget
 from gui.gui_utils import save_message_box, get_save_file, get_open_files
+from gui.plot.plot_data import PlotData
 from models.sensor_data import SENSORTYPES, SENSORTYPES_VALUES_SIZES
 #pylint: enable=E0401
 #pylint: enable=E0611
@@ -136,6 +137,7 @@ class SensorSetManagerMDI(BaseMDI):
         return True
 
     def _data_view_refresh(self):
+        self._sensor_data_view_widget.clear()
         selected_itens = self.gui.sensorDataTree.selectedItems()
         if selected_itens:
             selected_sensors_data = []
@@ -146,11 +148,38 @@ class SensorSetManagerMDI(BaseMDI):
             self._time_control_widget.set_enable(True)
             self._time_control_widget.show()
             self._sensor_data_view_widget.show()
-            self._sensor_data_view_widget.set_sensor_data(selected_sensors_data[0])
+            for sensor_data in selected_sensors_data:
+                plot_data = self._make_plot_data(sensor_data)
+                if plot_data is not None:
+                    self._sensor_data_view_widget.add_plot_data(plot_data)
         else:
             self._sensor_data_view_widget.hide()
             self._time_control_widget.set_enable(False)
             self._time_control_widget.hide()
+
+    @staticmethod
+    def _make_plot_data(sensor_data):
+        """make plot data"""
+        readings = sensor_data.readings
+        timestamps = None
+        values = None
+        if sensor_data.sensor_type in ('accelerometer', 'gyroscope', 'magnetometer'):
+            timestamps, x_values, y_values, z_values = zip(*readings)
+            values = {}
+            values['x'] = x_values
+            values['y'] = y_values
+            values['z'] = z_values
+            return PlotData(sensor_data.sensor_type, timestamps, values)
+        elif sensor_data.sensor_type == 'barometer':
+            timestamps, hpa_values = zip(*readings)
+            values = {}
+            values['hpa'] = hpa_values
+            return PlotData(sensor_data.sensor_type, timestamps, values)
+        else:
+            return None
+
+
+
 
     def _update_time_control(self, selected_sensors_data):
         """update time control"""

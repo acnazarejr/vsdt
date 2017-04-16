@@ -16,8 +16,8 @@ class PlotSensorCanvas(FigureCanvas):
         """Init method"""
 
         self._figure = Figure()
-        self._axes = {}
-        self._sensors_data = {}
+        self._subplots = {}
+        self._plots_data = {}
 
         self._figure.subplots_adjust(left=0.1, right=0.99, bottom=0.1, top=0.9, hspace=0, wspace=0)
         self._figure.patch.set_visible(False)
@@ -30,36 +30,38 @@ class PlotSensorCanvas(FigureCanvas):
 
         # self.update_central(sensor_data[100]['timestamp'])
 
-    def add_subplot(self, position, sensor_id, sensor_data):
+    def add_subplot(self, position, plot_id, plot_data):
         """Add subplot."""
-        if sensor_data.sensor_type == 'barometer':
-            return
-        self._axes[sensor_id] = self._figure.add_subplot(position, facecolor='y')
-        self._sensors_data[sensor_id] = {}
-        if sensor_data.sensor_type in ('accelerometer', 'gyroscope', 'magnetometer'):
-            readings = sensor_data.readings
-            timestamps, x_values, y_values, z_values = zip(*readings)
-            self._sensors_data[sensor_id]['sensor_type'] = sensor_data.sensor_type
-            self._sensors_data[sensor_id]['timestamps'] = timestamps
-            self._sensors_data[sensor_id]['x'] = x_values
-            self._sensors_data[sensor_id]['y'] = y_values
-            self._sensors_data[sensor_id]['z'] = z_values
+        self._subplots[plot_id] = self._figure.add_subplot(position, facecolor='y')
+        self._plots_data[plot_id] = plot_data
+        self.refresh_plot()
+
+
+    def refresh_plot(self):
+        """Refresh plot"""
+        for plot_id in self._subplots:
+            self._subplots[plot_id].cla()
+            xfmt = md.DateFormatter('%H:%M:%S.%f')
+            self._subplots[plot_id].xaxis.set_major_formatter(xfmt)
+            timestamps = self._plots_data[plot_id].plot_timestamps
+            for valuekey, plot_value in self._plots_data[plot_id].plot_values.items():
+                print(valuekey)
+                if self._plots_data[plot_id].is_plot_value_valid(valuekey):
+                    self._subplots[plot_id].plot(timestamps, plot_value)
+            self.draw()
+
+    def clear(self):
+        """Cleal plot canvas."""
+        self._figure.clear()
+        self._subplots.clear()
+        self._plots_data.clear()
+
 
     def update_central(self, central):
         """Update figure"""
-        for sensor_id in self._axes:
-            self._axes[sensor_id].cla()
-            xfmt = md.DateFormatter('%H:%M:%S.%f')
-            self._axes[sensor_id].xaxis.set_major_formatter(xfmt)
+        for plot_id in self._subplots:
             lim_inf = central - datetime.timedelta(milliseconds=5000)
             lim_sup = central + datetime.timedelta(milliseconds=5000)
-            self._axes[sensor_id].set_xlim(md.date2num(lim_inf), md.date2num(lim_sup))
+            self._subplots[plot_id].set_xlim(md.date2num(lim_inf), md.date2num(lim_sup))
             self._axes[sensor_id].axvline(x=md.date2num(central), color='red')
-            sensor_data = self._sensors_data[sensor_id]
-            timestamps = sensor_data['timestamps']
-            if sensor_data['sensor_type'] in ('accelerometer', 'gyroscope', 'magnetometer'):
-                x_values = sensor_data['x']
-                # y_values = sensor_data['y']
-                # z_values = sensor_data['z']
-                self._axes[sensor_id].plot(timestamps, x_values)
             self.draw()

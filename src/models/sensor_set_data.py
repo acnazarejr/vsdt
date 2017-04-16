@@ -108,15 +108,6 @@ class SensorSetData(TemporalData):
                 return sensor_data
         return None
 
-    # def sensor_to_list(self, sensor_type):
-    #     """convert sensor to a list of tuples"""
-    #     ret_list = []
-    #     for data in self._sensors[sensor_type]:
-    #         timestamp = data['timestamp']
-    #         values = tuple(data['values'].values())
-    #         ret_list.append((timestamp, ) + values)
-    #     return ret_list
-    #
     def has_sensor(self, sensor_type):
         """Check if has sensor_type."""
         for sensor_data in self._sensors_data:
