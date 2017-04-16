@@ -17,6 +17,7 @@ class PlotSensorCanvas(FigureCanvas):
 
         self._figure = Figure()
         self._subplots = {}
+        self._centralLines = {}
         self._plots_data = {}
 
         self._figure.subplots_adjust(left=0.1, right=0.99, bottom=0.1, top=0.9, hspace=0, wspace=0)
@@ -59,9 +60,11 @@ class PlotSensorCanvas(FigureCanvas):
 
     def update_central(self, central):
         """Update figure"""
+        for line in self._centralLines.values():
+            line.remove()
         for plot_id in self._subplots:
             lim_inf = central - datetime.timedelta(milliseconds=5000)
             lim_sup = central + datetime.timedelta(milliseconds=5000)
             self._subplots[plot_id].set_xlim(md.date2num(lim_inf), md.date2num(lim_sup))
-            self._axes[sensor_id].axvline(x=md.date2num(central), color='red')
+            self._centralLines[plot_id] = self._subplots[plot_id].axvline(x=md.date2num(central), color='red')
             self.draw()

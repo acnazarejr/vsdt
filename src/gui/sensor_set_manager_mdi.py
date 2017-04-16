@@ -137,21 +137,23 @@ class SensorSetManagerMDI(BaseMDI):
         return True
 
     def _data_view_refresh(self):
-        self._sensor_data_view_widget.clear()
         selected_itens = self.gui.sensorDataTree.selectedItems()
         if selected_itens:
+            selected_plots_data = []
             selected_sensors_data = []
             for selected_item in selected_itens:
                 sensor_type = selected_item.text(1)
-                selected_sensors_data.append(self._sensor_set_data.get_sensor_data(sensor_type))
+                sensor_data = self._sensor_set_data.get_sensor_data(sensor_type)
+                plot_data = self._make_plot_data(sensor_data)
+                if plot_data is not None:
+                    selected_sensors_data.append(sensor_data)
+                    selected_plots_data.append(plot_data)
             self._update_time_control(selected_sensors_data)
             self._time_control_widget.set_enable(True)
             self._time_control_widget.show()
+            self._sensor_data_view_widget.clear()
+            self._sensor_data_view_widget.add_plots_data(selected_plots_data)
             self._sensor_data_view_widget.show()
-            for sensor_data in selected_sensors_data:
-                plot_data = self._make_plot_data(sensor_data)
-                if plot_data is not None:
-                    self._sensor_data_view_widget.add_plot_data(plot_data)
         else:
             self._sensor_data_view_widget.hide()
             self._time_control_widget.set_enable(False)
