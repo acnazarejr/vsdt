@@ -25,6 +25,45 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <layout class="QHBoxLayout" name="controlLayout">
+         <item>
+          <widget class="QPushButton" name="zoomOutButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../res/vsdt.qrc">
+             <normaloff>:/icons/zoom_out.png</normaloff>:/icons/zoom_out.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="zoomInButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../res/vsdt.qrc">
+             <normaloff>:/icons/zoom_in.png</normaloff>:/icons/zoom_in.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QVBoxLayout" name="optionsLayout"/>
        </item>
        <item>
@@ -44,19 +83,10 @@
      </widget>
     </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="controlLayout">
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>PushButton</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/vsdt.qrc"/>
+ </resources>
  <connections/>
 </ui>

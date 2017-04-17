@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>zoom_in.png</file>
+    <file>zoom_out.png</file>
     <file>sensor.png</file>
     <file>smartphone.png</file>
     <file>smartwatch.png</file>

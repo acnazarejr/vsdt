@@ -85,7 +85,7 @@ def run():
     #pylint: disable=E1101
     app = QtWidgets.QApplication(sys.argv)
     window = VSDT()
-    window.show()
+    window.showMaximized()
     sys.exit(app.exec_())
     #pylint: enable=E1101
 

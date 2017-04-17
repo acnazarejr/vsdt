@@ -16,27 +16,17 @@ class SensorDataViewWidget(BaseWidget):
         """Init method."""
         BaseWidget.__init__(self, parent, SensorDataViewWidgetUi)
 
-        self._plot_canvas = PlotSensorCanvas()
+        self._plot_canvas = PlotSensorCanvas(zoom=5000)
         self._plots_data = {}
         self._plots_data_groupboxes = {}
-        self._start_time = None
-        self._end_time = None
 
         self.gui.splitter.insertWidget(0, self._plot_canvas)
         self._optionslayout = self.gui.optionsLayout
-        # self._optionslayout = QVBoxLayout()
-        # self.gui.optionsGroup.setLayout(self._optionslayout)
+
+        self.gui.zoomInButton.clicked.connect(self._zoom_in_button_clicked)
+        self.gui.zoomOutButton.clicked.connect(self._zoom_out_button_clicked)
 
         self.clear()
-
-
-    def add_plot_data(self, plot_data):
-        """add plot data method"""
-        self._plots_data[plot_data.data_id] = plot_data
-        groupbox, groupbox_checks = self._make_plot_data_groupbox(plot_data)
-        self._plots_data_groupboxes[plot_data.data_id] = (groupbox, groupbox_checks)
-        self._optionslayout.insertWidget(0, groupbox)
-        # self._refresh_plot_canvas()
 
     def add_plots_data(self, plots_data):
         """add plot data method"""
@@ -45,7 +35,7 @@ class SensorDataViewWidget(BaseWidget):
             groupbox, groupbox_checks = self._make_plot_data_groupbox(plot_data)
             self._plots_data_groupboxes[plot_data.data_id] = (groupbox, groupbox_checks)
             self._optionslayout.insertWidget(0, groupbox)
-        # self._refresh_plot_canvas()
+        self._refresh_plot_canvas()
 
     def clear(self):
         """clear"""
@@ -54,14 +44,17 @@ class SensorDataViewWidget(BaseWidget):
         for i in reversed(range(self._optionslayout.count())):
             self._optionslayout.itemAt(i).widget().deleteLater()
         self._plots_data_groupboxes.clear()
-        self._start_time = None
-        self._end_time = None
+        self._refresh_plot_canvas()
 
-    def update_central(self, central):
+    def update_central_time(self, central_time):
         """update central"""
-        pass
-        # if self._plot_canvas is not None:
-        #     self._plot_canvas.update_central(central)
+        self._plot_canvas.set_central_time(central_time)
+
+    def _zoom_in_button_clicked(self):
+        self._plot_canvas.set_zoom(self._plot_canvas.zoom - 1000)
+
+    def _zoom_out_button_clicked(self):
+        self._plot_canvas.set_zoom(self._plot_canvas.zoom + 1000)
 
     def _group_state_changed(self, value):
         if value:
@@ -74,7 +67,7 @@ class SensorDataViewWidget(BaseWidget):
                     if all_checked:
                         for check in groupbox_checks.values():
                             check.setChecked(True)
-        # self._refresh_plot_canvas()
+        self._refresh_plot_canvas()
 
     def _check_state_changed(self, value):
         if not value:
@@ -85,13 +78,12 @@ class SensorDataViewWidget(BaseWidget):
                         if check.isChecked():
                             group_condition = True
                     groupbox.setChecked(group_condition)
-        # self._refresh_plot_canvas()
+        self._refresh_plot_canvas()
 
 
     def _make_plot_data_groupbox(self, plot_data):
         """make plot data groupbox"""
         groupbox = QGroupBox()
-        groupbox.setFlat(True)
         groupbox.setCheckable(True)
         groupbox.setChecked(True)
         groupbox.setTitle(plot_data.data_id)
@@ -112,17 +104,11 @@ class SensorDataViewWidget(BaseWidget):
     def _refresh_plot_canvas(self):
         """refresh canvas"""
         self._plot_canvas.clear()
-        valid_plots_data = 0
+        valid_plots_data = []
         for key, plot_data in self._plots_data.items():
             if self._plots_data_groupboxes[key][0].isChecked():
-                valid_plots_data += 1
                 for valuekey in plot_data.plot_values:
                     value_valid = self._plots_data_groupboxes[key][1][valuekey].isChecked()
-                    print(key, valuekey, self._plots_data_groupboxes[key][1][valuekey].isChecked())
                     plot_data.set_plot_value_valid(valuekey, value_valid)
-
-        position = valid_plots_data * 100
-        position += 11
-        for key, plot_data in self._plots_data.items():
-            self._plot_canvas.add_subplot(position, key, plot_data)
-            position += 1
+                valid_plots_data.append(plot_data)
+        self._plot_canvas.set_plots_data(valid_plots_data)

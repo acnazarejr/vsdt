@@ -60,7 +60,7 @@ class SensorSetManagerMDI(BaseMDI):
     ###############################################################################################
     def _configure_gui(self):
         self.gui.verticalSplitter.setStretchFactor(0, 1)
-        self.gui.verticalSplitter.setStretchFactor(1, 8)
+        self.gui.verticalSplitter.setStretchFactor(1, 20)
         self.gui.optionsSplitter.setStretchFactor(0, 1)
         self.gui.optionsSplitter.setStretchFactor(1, 8)
 
@@ -148,11 +148,12 @@ class SensorSetManagerMDI(BaseMDI):
                 if plot_data is not None:
                     selected_sensors_data.append(sensor_data)
                     selected_plots_data.append(plot_data)
-            self._update_time_control(selected_sensors_data)
+            start_time, _ = self._update_time_control(selected_sensors_data)
             self._time_control_widget.set_enable(True)
             self._time_control_widget.show()
             self._sensor_data_view_widget.clear()
             self._sensor_data_view_widget.add_plots_data(selected_plots_data)
+            self._sensor_data_view_widget.update_central_time(start_time)
             self._sensor_data_view_widget.show()
         else:
             self._sensor_data_view_widget.hide()
@@ -198,6 +199,7 @@ class SensorSetManagerMDI(BaseMDI):
         self._time_control_widget.set_control_values(start_time=start_time,
                                                      end_time=end_time,
                                                      interval=interval)
+        return start_time, end_time
 
     ###############################################################################################
     # Private Slots
@@ -266,7 +268,7 @@ class SensorSetManagerMDI(BaseMDI):
 
     def _time_updated(self, time):
         """control current updated slot"""
-        self._sensor_data_view_widget.update_central(time)
+        self._sensor_data_view_widget.update_central_time(time)
 
 
 
