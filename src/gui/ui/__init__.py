@@ -15,6 +15,9 @@ VisualManagerMDIUi, VisualManagerMDIUiBase = uic.loadUiType(
 SensorSetManagerMDIUi, SensorSetManagerMDIUiBase = uic.loadUiType(
     os.path.join(DIR, 'sensor_set_manager_mdi.ui'))
 
+VisualSensorDataViewMDIUi, VisualSensorDataViewMDIUiBase = uic.loadUiType(
+    os.path.join(DIR, 'visual_sensor_data_view_mdi.ui'))
+
 VisualDataViewWidgetUi, VisualDataViewWidgetUiBase = uic.loadUiType(
     os.path.join(DIR, 'visual_data_view_widget.ui'))
 

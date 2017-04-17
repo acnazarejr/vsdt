@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>visualSensorDataViewMdi</class>
+ <widget class="QWidget" name="visualSensorDataViewMdi">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>798</width>
+    <height>615</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QSplitter" name="verticalSplitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QSplitter" name="horizontalSplitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QGroupBox" name="optionsGroupBox">
+       <property name="title">
+        <string>Options</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTreeWidget" name="dataTree">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::ExtendedSelection</enum>
+          </property>
+          <property name="indentation">
+           <number>20</number>
+          </property>
+          <property name="headerHidden">
+           <bool>true</bool>
+          </property>
+          <property name="columnCount">
+           <number>1</number>
+          </property>
+          <column>
+           <property name="text">
+            <string>Sensor Data</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="optionsButtonsLayout">
+          <item>
+           <widget class="QPushButton" name="addVisualDataButton">
+            <property name="text">
+             <string>Add Visual File</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../res/vsdt.qrc">
+              <normaloff>:/icons/add_file.png</normaloff>:/icons/add_file.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addSensorSetDataButton">
+            <property name="text">
+             <string>Add Sensor File</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../res/vsdt.qrc">
+              <normaloff>:/icons/add_file.png</normaloff>:/icons/add_file.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QGroupBox" name="visualDataViewGroup">
+          <property name="title">
+           <string>Visual Data View</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="sensorDataViewGroup">
+      <property name="title">
+       <string>Sensor Data View</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+  <zorder>horizontalLayoutWidget</zorder>
+  <zorder>verticalSplitter</zorder>
+  <zorder>verticalLayoutWidget</zorder>
+  <zorder>visualDataViewGroup</zorder>
+ </widget>
+ <resources>
+  <include location="../res/vsdt.qrc"/>
+ </resources>
+ <connections/>
+</ui>

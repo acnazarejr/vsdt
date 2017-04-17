@@ -8,6 +8,7 @@ from models import VisualData, SensorSetData
 from gui.ui import MainWindowUiBase, MainWindowUi
 from gui.visual_manager_mdi import VisualManagerMDI
 from gui.sensor_set_manager_mdi import SensorSetManagerMDI
+from gui.visual_sensor_data_view_mdi import VisualSensorDataViewMDI
 from gui.mdi_sub_window import MDISubWindow
 from gui.gui_utils import get_open_file, get_settings
 
@@ -30,6 +31,7 @@ class VSDT(MainWindowUiBase):
         self.gui.openVisualDataAction.triggered.connect(self._open_visual_data_action)
         self.gui.newSensorDataAction.triggered.connect(self._new_sensor_data_action)
         self.gui.openSensorDataAction.triggered.connect(self._open_sensor_data_action)
+        self.gui.openVisualSensorDataView.triggered.connect(self._open_visual_sensor_view_action)
 
     def _new_visual_data_action(self):
         """New visual data action"""
@@ -72,6 +74,11 @@ class VSDT(MainWindowUiBase):
                 sensor_data, working_dir=working_dir, has_changes=False)
             sensor_set_manager_mdi.set_json_file(sensor_data_file)
             self._open_sub_window(sensor_set_manager_mdi)
+
+    def _open_visual_sensor_view_action(self):
+        visual_sensor_data_view_mdi = VisualSensorDataViewMDI()
+        self._open_sub_window(visual_sensor_data_view_mdi)
+
 
     def _open_sub_window(self, widget):
         """Open a new MDI SubWindow"""

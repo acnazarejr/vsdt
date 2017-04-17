@@ -71,8 +71,15 @@
     <addaction name="newSensorDataAction"/>
     <addaction name="openSensorDataAction"/>
    </widget>
+   <widget class="QMenu" name="menuData_View">
+    <property name="title">
+     <string>Data View</string>
+    </property>
+    <addaction name="openVisualSensorDataView"/>
+   </widget>
    <addaction name="menuVisualData"/>
    <addaction name="menuSensorData"/>
+   <addaction name="menuData_View"/>
    <addaction name="menuAbout"/>
   </widget>
   <action name="actionVisualDataManager">
@@ -128,6 +135,14 @@
   <action name="actionNew">
    <property name="text">
     <string>New</string>
+   </property>
+  </action>
+  <action name="openVisualSensorDataView">
+   <property name="text">
+    <string>Open new view</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+W</string>
    </property>
   </action>
  </widget>
