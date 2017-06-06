@@ -1,5 +1,6 @@
 """VisualData class file."""
 
+import functools
 import os
 import json
 import datetime
@@ -104,7 +105,9 @@ class VisualData(TemporalData):
         self._end_time = self._timestamps[self._frames_count - 1]
 
 
+
     def frame_at_time(self, time):
+
         """Get frame at time."""
         if not self.has_video():
             raise RuntimeError('This visual data has no video')
@@ -114,20 +117,40 @@ class VisualData(TemporalData):
 
         time_milliseconds = time_delta_in_milliseconds(time, self._start_time)
         required_frame = int(time_milliseconds // self._interval)
+        # #pylint: disable=E1101
+        # next_frame = self._video_capture.get(cv2.CAP_PROP_POS_FRAMES)
+        # #pylint: enable=E1101
+        #
+        # frame = None
+        # if required_frame != next_frame:
+        #     print('error')
+        #     #pylint: disable=E1101
+        #     self._video_capture.set(cv2.CAP_PROP_POS_FRAMES, required_frame)
+        #     #pylint: enable=E1101
+        #
+        # ret, frame = self._video_capture.read()
+        # if not ret:
+        #     raise MemoryError('Invalid frame at {}'.format(time))
+        return self.frame_at_position(required_frame)
+
+    @functools.lru_cache(maxsize=100)
+    def frame_at_position(self, pos):
+        """return a frame at specific position"""
+
         #pylint: disable=E1101
         next_frame = self._video_capture.get(cv2.CAP_PROP_POS_FRAMES)
         #pylint: enable=E1101
 
         frame = None
-        if required_frame != next_frame:
+        if pos != next_frame:
             #pylint: disable=E1101
-            self._video_capture.set(cv2.CAP_PROP_POS_FRAMES, required_frame)
+            self._video_capture.set(cv2.CAP_PROP_POS_FRAMES, pos)
             #pylint: enable=E1101
 
         ret, frame = self._video_capture.read()
         if not ret:
-            raise MemoryError('Invalid frame at {}'.format(time))
-        return frame, self._timestamps[required_frame]
+            raise MemoryError('Invalid frame at {}'.format(pos))
+        return frame, self._timestamps[pos]
 
 
     def save(self, json_file):
